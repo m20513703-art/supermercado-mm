@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mercado MM</title>
+
+    <meta
+        name="description"
+        content="Mercado MM - ofertas e compras online."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     TELA DE ACESSO
+===================================================== -->
+
+<div id="telaAcesso" class="tela-acesso">
+
+    <div class="caixa-acesso">
+
+        <div class="logo-acesso">
+            MM
+        </div>
+
+        <h1>Mercado MM</h1>
+
+        <p>
+            Suas compras de forma simples e rápida.
+        </p>
+
+        <!-- LOGIN -->
+
+        <div id="areaLogin">
+
+            <h2>Entrar</h2>
+
+            <form id="formLogin">
+
+                <label for="loginNome">
+                    Nome
+                </label>
+
+                <input
+                    id="loginNome"
+                    type="text"
+                    placeholder="Digite seu nome"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="loginSenha">
+                    Senha
+                </label>
+
+                <input
+                    id="loginSenha"
+                    type="password"
+                    placeholder="Digite sua senha"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <p id="erroLogin" class="erro"></p>
+
+                <button
+                    type="submit"
+                    class="btn-principal btn-grande"
+                >
+                    Entrar
+                </button>
+
+            </form>
+
+            <div class="divisor">
+                <span>ou</span>
+            </div>
+
+            <button
+                id="btnIrCadastro"
+                type="button"
+                class="btn-secundario btn-grande"
+            >
+                Criar minha conta
+            </button>
+
+        </div>
+
+
+        <!-- CADASTRO -->
+
+        <div id="areaCadastro" class="oculto">
+
+            <h2>Criar minha conta</h2>
+
+            <p class="texto-formulario">
+                Cadastre seu nome e uma senha para acessar.
+            </p>
+
+            <form id="formCadastro">
+
+                <label for="cadastroNome">
+                    Nome
+                </label>
+
+                <input
+                    id="cadastroNome"
+                    type="text"
+                    placeholder="Digite seu nome"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="cadastroSenha">
+                    Senha
+                </label>
+
+                <input
+                    id="cadastroSenha"
+                    type="password"
+                    placeholder="Crie uma senha"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label for="cadastroConfirmarSenha">
+                    Confirmar senha
+                </label>
+
+                <input
+                    id="cadastroConfirmarSenha"
+                    type="password"
+                    placeholder="Digite a senha novamente"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <p id="erroCadastro" class="erro"></p>
+
+                <button
+                    type="submit"
+                    class="btn-principal btn-grande"
+                >
+                    Criar conta
+                </button>
+
+            </form>
+
+            <button
+                id="btnVoltarLogin"
+                type="button"
+                class="btn-link"
+            >
+                Já tenho uma conta
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SITE
+===================================================== -->
+
+<div id="siteMercado" class="oculto">
+
+    <!-- TOPO -->
+
+    <header class="topo">
+
+        <div class="logo">
+
+            <div class="logo-quadrado">
+                MM
+            </div>
+
+            <div class="logo-texto">
+
+                <strong>
+                    Mercado MM
+                </strong>
+
+                <small>
+                    Qualidade para você
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="acoes-topo">
+
+            <button
+                id="btnAbrirConta"
+                class="btn-topo"
+            >
+                👤 Minha conta
+            </button>
+
+            <button
+                id="btnAbrirCarrinho"
+                class="btn-carrinho"
+            >
+                🛒 Carrinho
+
+                <span id="contadorCarrinho">
+                    0
+                </span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MENU -->
+
+    <nav class="menu">
+
+        <button data-secao="inicio">
+            Início
+        </button>
+
+        <button data-secao="ofertas">
+            Ofertas
+        </button>
+
+        <button data-secao="listaCompras">
+            Lista de compras
+        </button>
+
+        <button data-secao="historico">
+            Histórico
+        </button>
+
+        <button data-secao="sobre">
+            Sobre
+        </button>
+
+        <button data-secao="contato">
+            Contato
+        </button>
+
+        <button data-secao="comoChegar">
+            Como chegar
+        </button>
+
+    </nav>
+
+
+    <main>
+
+        <!-- =================================================
+             INÍCIO
+        ================================================= -->
+
+        <section id="inicio" class="secao ativa">
+
+            <div class="hero">
+
+                <div class="hero-texto">
+
+                    <span class="selo">
+                        MERCADO MM
+                    </span>
+
+                    <h1>
+                        Suas compras
+                        <strong>mais fáceis.</strong>
+                    </h1>
+
+                    <p>
+                        Confira nossas ofertas, monte seu pedido
+                        e compre de forma rápida e organizada.
+                    </p>
+
+                    <button
+                        class="btn-principal"
+                        data-secao="ofertas"
+                    >
+                        Ver ofertas
+                    </button>
+
+                </div>
+
+
+                <div class="hero-logo">
+
+                    <div class="hero-logo-quadrado">
+                        MM
+                    </div>
+
+                    <strong>
+                        Mercado MM
+                    </strong>
+
+                    <span>
+                        Sempre para te servir
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="titulo-secao">
+
+                <span>OFERTAS</span>
+
+                <h2>
+                    Promoções da semana
+                </h2>
+
+                <p>
+                    Confira nossos produtos em promoção.
+                </p>
+
+            </div>
+
+
+            <div
+                id="listaPromocoesHome"
+                class="grade-produtos"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             OFERTAS
+        ================================================= -->
+
+        <section id="ofertas" class="secao">
+
+            <div class="titulo-secao">
+
+                <span>MERCADO MM</span>
+
+                <h2>
+                    Ofertas
+                </h2>
+
+                <p>
+                    Escolha comprar agora ou adicionar ao carrinho.
+                </p>
+
+            </div>
+
+
+            <div
+                id="listaPromocoes"
+                class="grade-produtos"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             LISTA DE COMPRAS
+        ================================================= -->
+
+        <section id="listaCompras" class="secao">
+
+            <div class="titulo-secao">
+
+                <span>ORGANIZAÇÃO</span>
+
+                <h2>
+                    Minha lista de compras
+                </h2>
+
+                <p>
+                    Monte sua lista e envie pelo WhatsApp.
+                </p>
+
+            </div>
+
+
+            <div class="lista-box">
+
+                <div class="form-grid">
+
+                    <div>
+                        <label for="listaProduto">
+                            Produto
+                        </label>
+
+                        <input
+                            id="listaProduto"
+                            type="text"
+                            placeholder="Ex.: Leite"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="listaMarca">
+                            Marca
+                        </label>
+
+                        <input
+                            id="listaMarca"
+                            type="text"
+                            placeholder="Ex.: Italac"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="listaQuantidade">
+                            Quantidade
+                        </label>
+
+                        <input
+                            id="listaQuantidade"
+                            type="text"
+                            placeholder="Ex.: 2"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="listaObservacao">
+                            Observação
+                        </label>
+
+                        <input
+                            id="listaObservacao"
+                            type="text"
+                            placeholder="Ex.: Integral"
+                        >
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="btnAdicionarLista"
+                    class="btn-principal"
+                >
+                    + Adicionar à lista
+                </button>
+
+
+                <div
+                    id="itensListaCompras"
+                    class="itens-lista"
+                ></div>
+
+
+                <div class="acoes-lista">
+
+                    <button
+                        id="btnEnviarListaWhatsApp"
+                        class="btn-whatsapp"
+                    >
+                        📲 Enviar lista pelo WhatsApp
+                    </button>
+
+                    <button
+                        id="btnLimparLista"
+                        class="btn-secundario"
+                    >
+                        Limpar lista
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HISTÓRICO
+        ================================================= -->
+
+        <section id="historico" class="secao">
+
+            <div class="titulo-secao">
+
+                <span>MEUS PEDIDOS</span>
+
+                <h2>
+                    Histórico
+                </h2>
+
+                <p>
+                    Seus pedidos ficam salvos neste aparelho.
+                </p>
+
+            </div>
+
+
+            <div
+                id="listaHistorico"
+                class="historico-lista"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             SOBRE
+        ================================================= -->
+
+        <section id="sobre" class="secao">
+
+            <div class="titulo-secao">
+
+                <span>SOBRE NÓS</span>
+
+                <h2>
+                    Mercado MM
+                </h2>
+
+            </div>
+
+
+            <div class="sobre-box">
+
+                <p>
+                    O Mercado MM foi pensado para deixar
+                    suas compras mais simples, rápidas
+                    e organizadas.
+                </p>
+
+                <p>
+                    Você escolhe os produtos, informa como
+                    deseja receber e envia seu pedido
+                    diretamente para nosso atendimento.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTATO
+        ================================================= -->
+
+        <section id="contato" class="secao">
+
+            <div class="titulo-secao">
+
+                <span>ATENDIMENTO</span>
+
+                <h2>
+                    Entre em contato
+                </h2>
+
+            </div>
+
+
+            <div class="sobre-box">
+
+                <h3>
+                    Mercado MM
+                </h3>
+
+                <p>
+                    📲 WhatsApp:
+                    <strong>(19) 98112-3401</strong>
+                </p>
+
+                <p>
+                    📍 Divinolândia - SP
+                </p>
+
+                <a
+                    href="https://wa.me/5519981123401"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-whatsapp"
+                >
+                    Falar pelo WhatsApp
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             COMO CHEGAR
+        ================================================= -->
+
+        <section id="comoChegar" class="secao">
+
+            <div class="titulo-secao">
+
+                <span>LOCALIZAÇÃO</span>
+
+                <h2>
+                    Como chegar
+                </h2>
+
+            </div>
+
+
+            <div class="endereco-box">
+
+                <div class="icone-endereco">
+                    📍
+                </div>
+
+                <h3>
+                    Mercado MM
+                </h3>
+
+                <p>
+                    Rua Guanabara, nº 26
+                </p>
+
+                <p>
+                    Divinolândia - SP
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Rua+Guanabara%2C+26%2C+Divinol%C3%A2ndia%2C+SP"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-principal"
+                >
+                    Abrir no Google Maps
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        <div class="footer-logo">
+            MM
+        </div>
+
+        <div>
+
+            <strong>
+                Mercado MM
+            </strong>
+
+            <p>
+                Muito obrigado pela preferência.
+            </p>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<!-- =====================================================
+     CARRINHO
+===================================================== -->
+
+<div id="painelCarrinho" class="painel">
+
+    <div class="painel-conteudo">
+
+        <div class="painel-topo">
+
+            <h2>
+                🛒 Meu carrinho
+            </h2>
+
+            <button id="btnFecharCarrinho">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            id="itensCarrinho"
+            class="itens-carrinho"
+        ></div>
+
+
+        <div class="totais">
+
+            <div>
+                <span>Subtotal</span>
+
+                <strong id="subtotalCarrinho">
+                    R$ 0,00
+                </strong>
+            </div>
+
+            <div class="total-final">
+
+                <span>Total</span>
+
+                <strong id="totalCarrinho">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="btnFinalizarCompra"
+            class="btn-principal btn-grande"
+        >
+            Finalizar pedido
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CHECKOUT
+===================================================== -->
+
+<div id="painelCheckout" class="painel">
+
+    <div class="painel-conteudo checkout">
+
+        <div class="painel-topo">
+
+            <h2>
+                Finalizar pedido
+            </h2>
+
+            <button id="btnFecharCheckout">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            id="resumoCheckout"
+            class="resumo-checkout"
+        ></div>
+
+
+        <form id="formCheckout">
+
+            <div class="campo-checkout">
+
+                <label for="tipoEntrega">
+                    Como deseja receber?
+                </label>
+
+                <select id="tipoEntrega">
+
+                    <option value="entrega">
+                        🚚 Entrega
+                    </option>
+
+                    <option value="retirada">
+                        🏪 Retirada
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ENDEREÇO -->
+
+            <div
+                id="campoEndereco"
+                class="endereco-checkout"
+            >
+
+                <h3>
+                    📍 Endereço de entrega
+                </h3>
+
+                <div class="endereco-grid">
+
+                    <div class="campo">
+
+                        <label for="enderecoRua">
+                            Rua
+                        </label>
+
+                        <input
+                            id="enderecoRua"
+                            type="text"
+                            placeholder="Nome da rua"
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="enderecoNumero">
+                            Número
+                        </label>
+
+                        <input
+                            id="enderecoNumero"
+                            type="text"
+                            placeholder="Número"
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="enderecoBairro">
+                            Bairro
+                        </label>
+
+                        <input
+                            id="enderecoBairro"
+                            type="text"
+                            placeholder="Bairro"
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="enderecoReferencia">
+                            Referência
+                        </label>
+
+                        <input
+                            id="enderecoReferencia"
+                            type="text"
+                            placeholder="Ex.: perto da praça"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAGAMENTO -->
+
+            <div class="campo-checkout">
+
+                <label for="formaPagamento">
+                    Forma de pagamento
+                </label>
+
+                <select id="formaPagamento">
+
+                    <option value="pix">
+                        Pix
+                    </option>
+
+                    <option value="credito">
+                        Crédito
+                    </option>
+
+                    <option value="debito">
+                        Débito
+                    </option>
+
+                    <option value="dinheiro">
+                        Dinheiro
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TROCO -->
+
+            <div
+                id="campoTroco"
+                class="campo-checkout oculto"
+            >
+
+                <label for="valorTroco">
+                    Troco para quanto?
+                </label>
+
+                <input
+                    id="valorTroco"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ex.: 100"
+                >
+
+                <p id="valorTrocoCalculado"></p>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-whatsapp btn-grande"
+            >
+                📲 Enviar pedido pelo WhatsApp
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTA
+===================================================== -->
+
+<div id="painelConta" class="painel">
+
+    <div class="painel-conteudo">
+
+        <div class="painel-topo">
+
+            <h2>
+                👤 Minha conta
+            </h2>
+
+            <button id="btnFecharConta">
+                ✕
+            </button>
+
+        </div>
+
+
+        <form id="formConta">
+
+            <label for="nomeConta">
+                Nome
+            </label>
+
+            <input
+                id="nomeConta"
+                type="text"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="btn-principal btn-grande"
+            >
+                Salvar alterações
+            </button>
+
+        </form>
+
+
+        <button
+            id="btnSairConta"
+            type="button"
+            class="btn-sair"
+        >
+            Sair da conta
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MENSAGEM DE RETORNO
+===================================================== -->
+
+<div id="mensagemRetorno" class="mensagem-retorno">
+
+    <div class="retorno-box">
+
+        <div class="retorno-logo">
+            MM
+        </div>
+
+        <h2>
+            Compra finalizada! 🛒
+        </h2>
+
+        <p>
+            Muito obrigado pela sua compra no Mercado MM!
+        </p>
+
+        <p>
+            Assim que seu pedido for enviado,
+            um de nossos atendentes irá atendê-lo
+            com todo prazer pelo WhatsApp.
+        </p>
+
+        <p>
+            Nós ficamos muito felizes com a sua compra
+            e vamos preparar todos os produtos com muito
+            cuidado e qualidade para você.
+        </p>
+
+        <strong>
+            Mercado MM — sempre para te servir!
+        </strong>
+
+        <button
+            id="btnFecharRetorno"
+            class="btn-principal btn-grande"
+        >
+            Voltar ao mercado
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
