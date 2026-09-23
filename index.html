@@ -8,7 +8,7 @@
 
     <meta
         name="description"
-        content="Mercado MM - ofertas e compras online."
+        content="Mercado MM - compras rápidas, ofertas e atendimento pelo WhatsApp."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -17,30 +17,30 @@
 <body>
 
 <!-- =====================================================
-     TELA DE ACESSO
+     ACESSO / CADASTRO
 ===================================================== -->
 
-<div id="telaAcesso" class="tela-acesso">
+<div id="acesso" class="acesso">
 
-    <div class="caixa-acesso">
+    <div class="acesso-card">
 
-        <div class="logo-acesso">
+        <div class="logo-mm grande">
             MM
         </div>
 
         <h1>Mercado MM</h1>
 
-        <p>
-            Suas compras de forma simples e rápida.
+        <p class="acesso-subtitulo">
+            Suas compras mais fáceis.
         </p>
 
         <!-- LOGIN -->
 
-        <div id="areaLogin">
+        <div id="loginBox">
 
             <h2>Entrar</h2>
 
-            <form id="formLogin">
+            <form id="loginForm">
 
                 <label for="loginNome">
                     Nome
@@ -50,7 +50,6 @@
                     id="loginNome"
                     type="text"
                     placeholder="Digite seu nome"
-                    autocomplete="username"
                     required
                 >
 
@@ -62,29 +61,25 @@
                     id="loginSenha"
                     type="password"
                     placeholder="Digite sua senha"
-                    autocomplete="current-password"
                     required
                 >
 
-                <p id="erroLogin" class="erro"></p>
+                <p id="loginErro" class="erro"></p>
 
-                <button
-                    type="submit"
-                    class="btn-principal btn-grande"
-                >
+                <button class="btn btn-laranja btn-full">
                     Entrar
                 </button>
 
             </form>
 
-            <div class="divisor">
+            <div class="ou">
                 <span>ou</span>
             </div>
 
             <button
-                id="btnIrCadastro"
+                id="irCadastro"
+                class="btn btn-outline btn-full"
                 type="button"
-                class="btn-secundario btn-grande"
             >
                 Criar minha conta
             </button>
@@ -94,15 +89,15 @@
 
         <!-- CADASTRO -->
 
-        <div id="areaCadastro" class="oculto">
+        <div id="cadastroBox" class="escondido">
 
             <h2>Criar minha conta</h2>
 
-            <p class="texto-formulario">
-                Cadastre seu nome e uma senha para acessar.
+            <p class="texto-menor">
+                Cadastre somente seu nome e uma senha.
             </p>
 
-            <form id="formCadastro">
+            <form id="cadastroForm">
 
                 <label for="cadastroNome">
                     Nome
@@ -111,8 +106,7 @@
                 <input
                     id="cadastroNome"
                     type="text"
-                    placeholder="Digite seu nome"
-                    autocomplete="name"
+                    placeholder="Seu nome"
                     required
                 >
 
@@ -124,35 +118,30 @@
                     id="cadastroSenha"
                     type="password"
                     placeholder="Crie uma senha"
-                    autocomplete="new-password"
                     required
                 >
 
-                <label for="cadastroConfirmarSenha">
+                <label for="cadastroConfirmacao">
                     Confirmar senha
                 </label>
 
                 <input
-                    id="cadastroConfirmarSenha"
+                    id="cadastroConfirmacao"
                     type="password"
-                    placeholder="Digite a senha novamente"
-                    autocomplete="new-password"
+                    placeholder="Repita sua senha"
                     required
                 >
 
-                <p id="erroCadastro" class="erro"></p>
+                <p id="cadastroErro" class="erro"></p>
 
-                <button
-                    type="submit"
-                    class="btn-principal btn-grande"
-                >
+                <button class="btn btn-laranja btn-full">
                     Criar conta
                 </button>
 
             </form>
 
             <button
-                id="btnVoltarLogin"
+                id="irLogin"
                 type="button"
                 class="btn-link"
             >
@@ -167,55 +156,45 @@
 
 
 <!-- =====================================================
-     SITE
+     SISTEMA
 ===================================================== -->
 
-<div id="siteMercado" class="oculto">
+<div id="app" class="escondido">
 
     <!-- TOPO -->
 
     <header class="topo">
 
-        <div class="logo">
+        <div class="marca">
 
-            <div class="logo-quadrado">
+            <div class="logo-mm">
                 MM
             </div>
 
-            <div class="logo-texto">
-
-                <strong>
-                    Mercado MM
-                </strong>
-
-                <small>
-                    Qualidade para você
-                </small>
-
+            <div>
+                <strong>Mercado MM</strong>
+                <span>Qualidade para você</span>
             </div>
 
         </div>
 
-
-        <div class="acoes-topo">
+        <div class="topo-acoes">
 
             <button
-                id="btnAbrirConta"
+                id="btnConta"
                 class="btn-topo"
+                type="button"
             >
                 👤 Minha conta
             </button>
 
             <button
-                id="btnAbrirCarrinho"
-                class="btn-carrinho"
+                id="btnCarrinho"
+                class="btn-topo carrinho-btn"
+                type="button"
             >
                 🛒 Carrinho
-
-                <span id="contadorCarrinho">
-                    0
-                </span>
-
+                <b id="contador">0</b>
             </button>
 
         </div>
@@ -227,50 +206,53 @@
 
     <nav class="menu">
 
-        <button data-secao="inicio">
+        <button data-pagina="inicio">
             Início
         </button>
 
-        <button data-secao="ofertas">
+        <button data-pagina="ofertas">
             Ofertas
         </button>
 
-        <button data-secao="listaCompras">
+        <button data-pagina="lista">
             Lista de compras
         </button>
 
-        <button data-secao="historico">
+        <button data-pagina="historico">
             Histórico
         </button>
 
-        <button data-secao="sobre">
+        <button data-pagina="sobre">
             Sobre
         </button>
 
-        <button data-secao="contato">
+        <button data-pagina="contato">
             Contato
         </button>
 
-        <button data-secao="comoChegar">
+        <button data-pagina="localizacao">
             Como chegar
         </button>
 
     </nav>
 
 
+    <!-- CONTEÚDO -->
+
     <main>
 
-        <!-- =================================================
-             INÍCIO
-        ================================================= -->
+        <!-- INÍCIO -->
 
-        <section id="inicio" class="secao ativa">
+        <section
+            id="inicio"
+            class="pagina ativa"
+        >
 
             <div class="hero">
 
                 <div class="hero-texto">
 
-                    <span class="selo">
+                    <span class="tag">
                         MERCADO MM
                     </span>
 
@@ -280,23 +262,24 @@
                     </h1>
 
                     <p>
-                        Confira nossas ofertas, monte seu pedido
-                        e compre de forma rápida e organizada.
+                        Confira nossas promoções,
+                        monte seu pedido e envie
+                        diretamente pelo WhatsApp.
                     </p>
 
                     <button
-                        class="btn-principal"
-                        data-secao="ofertas"
+                        class="btn btn-laranja"
+                        data-pagina="ofertas"
+                        type="button"
                     >
                         Ver ofertas
                     </button>
 
                 </div>
 
+                <div class="hero-marca">
 
-                <div class="hero-logo">
-
-                    <div class="hero-logo-quadrado">
+                    <div class="hero-logo">
                         MM
                     </div>
 
@@ -313,36 +296,36 @@
             </div>
 
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
-                <span>OFERTAS</span>
+                <span>OFERTAS DA SEMANA</span>
 
                 <h2>
-                    Promoções da semana
+                    Promoções
                 </h2>
 
                 <p>
-                    Confira nossos produtos em promoção.
+                    Aproveite nossas ofertas.
                 </p>
 
             </div>
 
-
             <div
-                id="listaPromocoesHome"
-                class="grade-produtos"
+                id="promocoesInicio"
+                class="produtos"
             ></div>
 
         </section>
 
 
-        <!-- =================================================
-             OFERTAS
-        ================================================= -->
+        <!-- OFERTAS -->
 
-        <section id="ofertas" class="secao">
+        <section
+            id="ofertas"
+            class="pagina"
+        >
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
                 <span>MERCADO MM</span>
 
@@ -356,22 +339,22 @@
 
             </div>
 
-
             <div
-                id="listaPromocoes"
-                class="grade-produtos"
+                id="promocoes"
+                class="produtos"
             ></div>
 
         </section>
 
 
-        <!-- =================================================
-             LISTA DE COMPRAS
-        ================================================= -->
+        <!-- LISTA -->
 
-        <section id="listaCompras" class="secao">
+        <section
+            id="lista"
+            class="pagina"
+        >
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
                 <span>ORGANIZAÇÃO</span>
 
@@ -380,20 +363,18 @@
                 </h2>
 
                 <p>
-                    Monte sua lista e envie pelo WhatsApp.
+                    Monte sua lista antes de ir ao mercado.
                 </p>
 
             </div>
 
 
-            <div class="lista-box">
+            <div class="box">
 
-                <div class="form-grid">
+                <div class="campos-lista">
 
                     <div>
-                        <label for="listaProduto">
-                            Produto
-                        </label>
+                        <label>Produto</label>
 
                         <input
                             id="listaProduto"
@@ -403,9 +384,7 @@
                     </div>
 
                     <div>
-                        <label for="listaMarca">
-                            Marca
-                        </label>
+                        <label>Marca</label>
 
                         <input
                             id="listaMarca"
@@ -415,9 +394,7 @@
                     </div>
 
                     <div>
-                        <label for="listaQuantidade">
-                            Quantidade
-                        </label>
+                        <label>Quantidade</label>
 
                         <input
                             id="listaQuantidade"
@@ -427,12 +404,10 @@
                     </div>
 
                     <div>
-                        <label for="listaObservacao">
-                            Observação
-                        </label>
+                        <label>Observação</label>
 
                         <input
-                            id="listaObservacao"
+                            id="listaObs"
                             type="text"
                             placeholder="Ex.: Integral"
                         >
@@ -440,33 +415,30 @@
 
                 </div>
 
-
                 <button
-                    id="btnAdicionarLista"
-                    class="btn-principal"
+                    id="adicionarLista"
+                    class="btn btn-laranja"
+                    type="button"
                 >
-                    + Adicionar à lista
+                    + Adicionar
                 </button>
 
+                <div id="itensLista"></div>
 
-                <div
-                    id="itensListaCompras"
-                    class="itens-lista"
-                ></div>
-
-
-                <div class="acoes-lista">
+                <div class="lista-acoes">
 
                     <button
-                        id="btnEnviarListaWhatsApp"
-                        class="btn-whatsapp"
+                        id="enviarLista"
+                        class="btn btn-whatsapp"
+                        type="button"
                     >
-                        📲 Enviar lista pelo WhatsApp
+                        📲 Enviar pelo WhatsApp
                     </button>
 
                     <button
-                        id="btnLimparLista"
-                        class="btn-secundario"
+                        id="limparLista"
+                        class="btn btn-outline"
+                        type="button"
                     >
                         Limpar lista
                     </button>
@@ -478,13 +450,14 @@
         </section>
 
 
-        <!-- =================================================
-             HISTÓRICO
-        ================================================= -->
+        <!-- HISTÓRICO -->
 
-        <section id="historico" class="secao">
+        <section
+            id="historico"
+            class="pagina"
+        >
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
                 <span>MEUS PEDIDOS</span>
 
@@ -498,24 +471,21 @@
 
             </div>
 
-
-            <div
-                id="listaHistorico"
-                class="historico-lista"
-            ></div>
+            <div id="historicoLista"></div>
 
         </section>
 
 
-        <!-- =================================================
-             SOBRE
-        ================================================= -->
+        <!-- SOBRE -->
 
-        <section id="sobre" class="secao">
+        <section
+            id="sobre"
+            class="pagina"
+        >
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
-                <span>SOBRE NÓS</span>
+                <span>SOBRE</span>
 
                 <h2>
                     Mercado MM
@@ -523,19 +493,18 @@
 
             </div>
 
-
-            <div class="sobre-box">
+            <div class="box texto-box">
 
                 <p>
-                    O Mercado MM foi pensado para deixar
+                    O Mercado MM foi criado para deixar
                     suas compras mais simples, rápidas
                     e organizadas.
                 </p>
 
                 <p>
-                    Você escolhe os produtos, informa como
-                    deseja receber e envia seu pedido
-                    diretamente para nosso atendimento.
+                    Você escolhe suas ofertas, monta
+                    seu pedido e envia tudo diretamente
+                    para nosso atendimento.
                 </p>
 
             </div>
@@ -543,13 +512,14 @@
         </section>
 
 
-        <!-- =================================================
-             CONTATO
-        ================================================= -->
+        <!-- CONTATO -->
 
-        <section id="contato" class="secao">
+        <section
+            id="contato"
+            class="pagina"
+        >
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
                 <span>ATENDIMENTO</span>
 
@@ -559,27 +529,30 @@
 
             </div>
 
+            <div class="box contato-box">
 
-            <div class="sobre-box">
+                <div class="icone-grande">
+                    📲
+                </div>
 
                 <h3>
                     Mercado MM
                 </h3>
 
                 <p>
-                    📲 WhatsApp:
+                    WhatsApp:
                     <strong>(19) 98112-3401</strong>
                 </p>
 
                 <p>
-                    📍 Divinolândia - SP
+                    Divinolândia - SP
                 </p>
 
                 <a
                     href="https://wa.me/5519981123401"
                     target="_blank"
                     rel="noopener"
-                    class="btn-whatsapp"
+                    class="btn btn-whatsapp"
                 >
                     Falar pelo WhatsApp
                 </a>
@@ -589,13 +562,14 @@
         </section>
 
 
-        <!-- =================================================
-             COMO CHEGAR
-        ================================================= -->
+        <!-- LOCALIZAÇÃO -->
 
-        <section id="comoChegar" class="secao">
+        <section
+            id="localizacao"
+            class="pagina"
+        >
 
-            <div class="titulo-secao">
+            <div class="titulo">
 
                 <span>LOCALIZAÇÃO</span>
 
@@ -605,10 +579,9 @@
 
             </div>
 
+            <div class="box localizacao-box">
 
-            <div class="endereco-box">
-
-                <div class="icone-endereco">
+                <div class="icone-grande">
                     📍
                 </div>
 
@@ -628,7 +601,7 @@
                     href="https://www.google.com/maps/search/?api=1&query=Rua+Guanabara%2C+26%2C+Divinol%C3%A2ndia%2C+SP"
                     target="_blank"
                     rel="noopener"
-                    class="btn-principal"
+                    class="btn btn-laranja"
                 >
                     Abrir no Google Maps
                 </a>
@@ -649,15 +622,10 @@
         </div>
 
         <div>
-
-            <strong>
-                Mercado MM
-            </strong>
-
+            <strong>Mercado MM</strong>
             <p>
                 Muito obrigado pela preferência.
             </p>
-
         </div>
 
     </footer>
@@ -669,55 +637,46 @@
      CARRINHO
 ===================================================== -->
 
-<div id="painelCarrinho" class="painel">
+<div
+    id="carrinhoModal"
+    class="modal escondido"
+>
 
-    <div class="painel-conteudo">
+    <div class="modal-card">
 
-        <div class="painel-topo">
+        <div class="modal-header">
 
             <h2>
                 🛒 Meu carrinho
             </h2>
 
-            <button id="btnFecharCarrinho">
+            <button
+                data-fechar="carrinhoModal"
+                type="button"
+            >
                 ✕
             </button>
 
         </div>
 
+        <div id="carrinhoItens"></div>
 
-        <div
-            id="itensCarrinho"
-            class="itens-carrinho"
-        ></div>
+        <div class="total-area">
 
+            <span>
+                Total
+            </span>
 
-        <div class="totais">
-
-            <div>
-                <span>Subtotal</span>
-
-                <strong id="subtotalCarrinho">
-                    R$ 0,00
-                </strong>
-            </div>
-
-            <div class="total-final">
-
-                <span>Total</span>
-
-                <strong id="totalCarrinho">
-                    R$ 0,00
-                </strong>
-
-            </div>
+            <strong id="carrinhoTotal">
+                R$ 0,00
+            </strong>
 
         </div>
 
-
         <button
-            id="btnFinalizarCompra"
-            class="btn-principal btn-grande"
+            id="finalizarCarrinho"
+            class="btn btn-laranja btn-full"
+            type="button"
         >
             Finalizar pedido
         </button>
@@ -731,187 +690,144 @@
      CHECKOUT
 ===================================================== -->
 
-<div id="painelCheckout" class="painel">
+<div
+    id="checkoutModal"
+    class="modal escondido"
+>
 
-    <div class="painel-conteudo checkout">
+    <div class="modal-card checkout-card">
 
-        <div class="painel-topo">
+        <div class="modal-header">
 
             <h2>
                 Finalizar pedido
             </h2>
 
-            <button id="btnFecharCheckout">
+            <button
+                data-fechar="checkoutModal"
+                type="button"
+            >
                 ✕
             </button>
 
         </div>
 
-
         <div
-            id="resumoCheckout"
-            class="resumo-checkout"
+            id="resumoPedido"
+            class="resumo"
         ></div>
 
 
-        <form id="formCheckout">
+        <form id="checkoutForm">
 
-            <div class="campo-checkout">
+            <label>
+                Como deseja receber?
+            </label>
 
-                <label for="tipoEntrega">
-                    Como deseja receber?
-                </label>
+            <select id="tipoEntrega">
 
-                <select id="tipoEntrega">
+                <option value="entrega">
+                    🚚 Entrega
+                </option>
 
-                    <option value="entrega">
-                        🚚 Entrega
-                    </option>
+                <option value="retirada">
+                    🏪 Retirada no mercado
+                </option>
 
-                    <option value="retirada">
-                        🏪 Retirada
-                    </option>
-
-                </select>
-
-            </div>
+            </select>
 
 
-            <!-- ENDEREÇO -->
-
-            <div
-                id="campoEndereco"
-                class="endereco-checkout"
-            >
+            <div id="enderecoArea">
 
                 <h3>
                     📍 Endereço de entrega
                 </h3>
 
-                <div class="endereco-grid">
+                <label>Rua</label>
 
-                    <div class="campo">
+                <input
+                    id="rua"
+                    type="text"
+                    placeholder="Nome da rua"
+                >
 
-                        <label for="enderecoRua">
-                            Rua
-                        </label>
+                <label>Número</label>
 
-                        <input
-                            id="enderecoRua"
-                            type="text"
-                            placeholder="Nome da rua"
-                        >
+                <input
+                    id="numero"
+                    type="text"
+                    placeholder="Número"
+                >
 
-                    </div>
+                <label>Bairro</label>
 
+                <input
+                    id="bairro"
+                    type="text"
+                    placeholder="Bairro"
+                >
 
-                    <div class="campo">
+                <label>Referência</label>
 
-                        <label for="enderecoNumero">
-                            Número
-                        </label>
-
-                        <input
-                            id="enderecoNumero"
-                            type="text"
-                            placeholder="Número"
-                        >
-
-                    </div>
-
-
-                    <div class="campo">
-
-                        <label for="enderecoBairro">
-                            Bairro
-                        </label>
-
-                        <input
-                            id="enderecoBairro"
-                            type="text"
-                            placeholder="Bairro"
-                        >
-
-                    </div>
-
-
-                    <div class="campo">
-
-                        <label for="enderecoReferencia">
-                            Referência
-                        </label>
-
-                        <input
-                            id="enderecoReferencia"
-                            type="text"
-                            placeholder="Ex.: perto da praça"
-                        >
-
-                    </div>
-
-                </div>
+                <input
+                    id="referencia"
+                    type="text"
+                    placeholder="Ex.: perto da praça"
+                >
 
             </div>
 
 
-            <!-- PAGAMENTO -->
+            <label>
+                Forma de pagamento
+            </label>
 
-            <div class="campo-checkout">
+            <select id="pagamento">
 
-                <label for="formaPagamento">
-                    Forma de pagamento
-                </label>
+                <option value="pix">
+                    Pix
+                </option>
 
-                <select id="formaPagamento">
+                <option value="credito">
+                    Crédito
+                </option>
 
-                    <option value="pix">
-                        Pix
-                    </option>
+                <option value="debito">
+                    Débito
+                </option>
 
-                    <option value="credito">
-                        Crédito
-                    </option>
+                <option value="dinheiro">
+                    Dinheiro
+                </option>
 
-                    <option value="debito">
-                        Débito
-                    </option>
+            </select>
 
-                    <option value="dinheiro">
-                        Dinheiro
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <!-- TROCO -->
 
             <div
-                id="campoTroco"
-                class="campo-checkout oculto"
+                id="trocoArea"
+                class="escondido"
             >
 
-                <label for="valorTroco">
+                <label>
                     Troco para quanto?
                 </label>
 
                 <input
-                    id="valorTroco"
+                    id="trocoPara"
                     type="number"
                     min="0"
                     step="0.01"
                     placeholder="Ex.: 100"
                 >
 
-                <p id="valorTrocoCalculado"></p>
+                <p id="trocoResultado"></p>
 
             </div>
 
 
             <button
+                class="btn btn-whatsapp btn-full"
                 type="submit"
-                class="btn-whatsapp btn-grande"
             >
                 📲 Enviar pedido pelo WhatsApp
             </button>
@@ -927,26 +843,31 @@
      CONTA
 ===================================================== -->
 
-<div id="painelConta" class="painel">
+<div
+    id="contaModal"
+    class="modal escondido"
+>
 
-    <div class="painel-conteudo">
+    <div class="modal-card">
 
-        <div class="painel-topo">
+        <div class="modal-header">
 
             <h2>
                 👤 Minha conta
             </h2>
 
-            <button id="btnFecharConta">
+            <button
+                data-fechar="contaModal"
+                type="button"
+            >
                 ✕
             </button>
 
         </div>
 
+        <form id="contaForm">
 
-        <form id="formConta">
-
-            <label for="nomeConta">
+            <label>
                 Nome
             </label>
 
@@ -956,21 +877,19 @@
                 required
             >
 
-
             <button
+                class="btn btn-laranja btn-full"
                 type="submit"
-                class="btn-principal btn-grande"
             >
-                Salvar alterações
+                Salvar
             </button>
 
         </form>
 
-
         <button
-            id="btnSairConta"
+            id="sairConta"
+            class="btn btn-sair btn-full"
             type="button"
-            class="btn-sair"
         >
             Sair da conta
         </button>
@@ -981,14 +900,17 @@
 
 
 <!-- =====================================================
-     MENSAGEM DE RETORNO
+     RETORNO
 ===================================================== -->
 
-<div id="mensagemRetorno" class="mensagem-retorno">
+<div
+    id="retornoModal"
+    class="modal escondido"
+>
 
-    <div class="retorno-box">
+    <div class="modal-card retorno">
 
-        <div class="retorno-logo">
+        <div class="logo-mm grande">
             MM
         </div>
 
@@ -997,7 +919,8 @@
         </h2>
 
         <p>
-            Muito obrigado pela sua compra no Mercado MM!
+            Muito obrigado pela sua compra
+            no Mercado MM!
         </p>
 
         <p>
@@ -1007,9 +930,9 @@
         </p>
 
         <p>
-            Nós ficamos muito felizes com a sua compra
-            e vamos preparar todos os produtos com muito
-            cuidado e qualidade para você.
+            Ficamos muito felizes com a sua compra
+            e vamos preparar todos os produtos
+            com muito cuidado e qualidade para você.
         </p>
 
         <strong>
@@ -1017,8 +940,9 @@
         </strong>
 
         <button
-            id="btnFecharRetorno"
-            class="btn-principal btn-grande"
+            id="fecharRetorno"
+            class="btn btn-laranja btn-full"
+            type="button"
         >
             Voltar ao mercado
         </button>
