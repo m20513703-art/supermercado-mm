@@ -1,10 +1,5 @@
 "use strict";
 
-/* =====================================================
-   MERCADO MM
-   JAVASCRIPT NOVO
-===================================================== */
-
 
 /* =====================================================
    CONFIGURAÇÕES
@@ -20,7 +15,7 @@ const CHAVE_HISTORICO = "mercadoMM_historico";
 
 
 /* =====================================================
-   PROMOÇÕES
+   PRODUTOS
 ===================================================== */
 
 const produtos = [
@@ -61,7 +56,7 @@ const produtos = [
 
 
 /* =====================================================
-   UTILIDADES
+   FUNÇÕES BÁSICAS
 ===================================================== */
 
 function dinheiro(valor) {
@@ -94,9 +89,13 @@ function carregar(chave, padrao) {
         const valor =
             localStorage.getItem(chave);
 
-        return valor
-            ? JSON.parse(valor)
-            : padrao;
+        if (!valor) {
+
+            return padrao;
+
+        }
+
+        return JSON.parse(valor);
 
     } catch {
 
@@ -107,15 +106,11 @@ function carregar(chave, padrao) {
 }
 
 
-function idNovo() {
+function gerarId() {
 
-    return (
-        Date.now() +
+    return Date.now() +
         "-" +
-        Math.floor(
-            Math.random() * 10000
-        )
-    );
+        Math.floor(Math.random() * 9999);
 
 }
 
@@ -133,69 +128,36 @@ function escapar(texto) {
 
 
 /* =====================================================
-   ACESSO
+   LOGIN
 ===================================================== */
-
-function mostrarLogin() {
-
-    document
-        .getElementById("loginBox")
-        .classList.remove("escondido");
-
-    document
-        .getElementById("cadastroBox")
-        .classList.add("escondido");
-
-}
-
 
 function mostrarCadastro() {
 
     document
-        .getElementById("loginBox")
-        .classList.add("escondido");
+        .getElementById("loginArea")
+        .classList.add("oculto");
 
     document
-        .getElementById("cadastroBox")
-        .classList.remove("escondido");
+        .getElementById("cadastroArea")
+        .classList.remove("oculto");
 
 }
 
 
-function entrarNoSistema() {
+function mostrarLogin() {
 
     document
-        .getElementById("acesso")
-        .classList.add("escondido");
+        .getElementById("cadastroArea")
+        .classList.add("oculto");
 
     document
-        .getElementById("app")
-        .classList.remove("escondido");
+        .getElementById("loginArea")
+        .classList.remove("oculto");
 
 }
 
 
-function sairDoSistema() {
-
-    document
-        .getElementById("app")
-        .classList.add("escondido");
-
-    document
-        .getElementById("acesso")
-        .classList.remove("escondido");
-
-}
-
-
-/* =====================================================
-   CADASTRO
-===================================================== */
-
-function cadastrar(evento) {
-
-    evento.preventDefault();
-
+function cadastrar() {
 
     const nome =
         document
@@ -208,16 +170,14 @@ function cadastrar(evento) {
             .getElementById("cadastroSenha")
             .value;
 
-    const confirmacao =
+    const senha2 =
         document
-            .getElementById("cadastroConfirmacao")
+            .getElementById("cadastroSenha2")
             .value;
 
     const erro =
-        document.getElementById(
-            "cadastroErro"
-        );
-
+        document
+            .getElementById("erroCadastro");
 
     erro.textContent = "";
 
@@ -242,7 +202,7 @@ function cadastrar(evento) {
     }
 
 
-    if (senha !== confirmacao) {
+    if (senha !== senha2) {
 
         erro.textContent =
             "As senhas não são iguais.";
@@ -271,7 +231,7 @@ function cadastrar(evento) {
 
     const usuario = {
 
-        id: idNovo(),
+        id: gerarId(),
 
         nome: nome,
 
@@ -295,11 +255,6 @@ function cadastrar(evento) {
     );
 
 
-    document
-        .getElementById("cadastroForm")
-        .reset();
-
-
     entrarNoSistema();
 
     mostrarPagina("inicio");
@@ -308,13 +263,10 @@ function cadastrar(evento) {
 
 
 /* =====================================================
-   LOGIN
+   ENTRAR
 ===================================================== */
 
-function login(evento) {
-
-    evento.preventDefault();
-
+function entrar() {
 
     const nome =
         document
@@ -328,9 +280,8 @@ function login(evento) {
             .value;
 
     const erro =
-        document.getElementById(
-            "loginErro"
-        );
+        document
+            .getElementById("erroLogin");
 
 
     erro.textContent = "";
@@ -345,12 +296,8 @@ function login(evento) {
 
     if (!usuario) {
 
-        mostrarCadastro();
-
-        document.getElementById(
-            "cadastroErro"
-        ).textContent =
-            "Crie sua conta primeiro.";
+        erro.textContent =
+            "Nenhuma conta encontrada.";
 
         return;
 
@@ -378,11 +325,6 @@ function login(evento) {
     );
 
 
-    document
-        .getElementById("loginForm")
-        .reset();
-
-
     entrarNoSistema();
 
     mostrarPagina("inicio");
@@ -390,100 +332,32 @@ function login(evento) {
 }
 
 
-/* =====================================================
-   CONTA
-===================================================== */
-
-function abrirConta() {
-
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
-        );
-
-
-    if (!usuario) {
-        return;
-    }
-
+function entrarNoSistema() {
 
     document
-        .getElementById("nomeConta")
-        .value =
-        usuario.nome;
+        .getElementById("telaLogin")
+        .classList.add("oculto");
 
-
-    abrirModal("contaModal");
-
-}
-
-
-function salvarConta(evento) {
-
-    evento.preventDefault();
-
-
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
-        );
-
-
-    if (!usuario) {
-        return;
-    }
-
-
-    const nome =
-        document
-            .getElementById("nomeConta")
-            .value
-            .trim();
-
-
-    if (nome.length < 2) {
-
-        alert(
-            "Digite um nome válido."
-        );
-
-        return;
-
-    }
-
-
-    usuario.nome =
-        nome;
-
-
-    salvar(
-        CHAVE_USUARIO,
-        usuario
-    );
-
-
-    fecharModal("contaModal");
-
-
-    alert(
-        "Nome atualizado com sucesso."
-    );
+    document
+        .getElementById("sistema")
+        .classList.remove("oculto");
 
 }
 
 
-function sairConta() {
+function sair() {
 
     localStorage.removeItem(
         CHAVE_LOGIN
     );
 
+    document
+        .getElementById("sistema")
+        .classList.add("oculto");
 
-    fecharModal("contaModal");
-
-    sairDoSistema();
+    document
+        .getElementById("telaLogin")
+        .classList.remove("oculto");
 
     mostrarLogin();
 
@@ -498,13 +372,10 @@ function mostrarPagina(id) {
 
     document
         .querySelectorAll(".pagina")
-        .forEach(pagina => {
-
-            pagina.classList.remove(
-                "ativa"
-            );
-
-        });
+        .forEach(
+            pagina =>
+                pagina.classList.remove("ativa")
+        );
 
 
     const pagina =
@@ -512,13 +383,13 @@ function mostrarPagina(id) {
 
 
     if (!pagina) {
+
         return;
+
     }
 
 
-    pagina.classList.add(
-        "ativa"
-    );
+    pagina.classList.add("ativa");
 
 
     window.scrollTo({
@@ -529,164 +400,81 @@ function mostrarPagina(id) {
 }
 
 
-function configurarNavegacao() {
-
-    document
-        .querySelectorAll("[data-pagina]")
-        .forEach(botao => {
-
-            botao.addEventListener(
-                "click",
-                () => {
-
-                    mostrarPagina(
-                        botao.dataset.pagina
-                    );
-
-                }
-            );
-
-        });
-
-}
-
-
 /* =====================================================
    PRODUTOS
 ===================================================== */
-
-function criarProduto(produto) {
-
-    return `
-
-        <article class="produto">
-
-            <div class="produto-foto">
-
-                <img
-                    src="${escapar(produto.imagem)}"
-                    alt="${escapar(produto.nome)}"
-                    onerror="
-                        this.onerror=null;
-                        this.src='img/mercado-mm.jpg';
-                    "
-                >
-
-            </div>
-
-            <div class="produto-conteudo">
-
-                <h3>
-                    ${escapar(produto.nome)}
-                </h3>
-
-                <div class="preco">
-                    ${dinheiro(produto.preco)}
-                </div>
-
-                ${
-                    produto.unidade
-                        ? `
-                            <div class="unidade">
-                                por ${escapar(produto.unidade)}
-                            </div>
-                        `
-                        : ""
-                }
-
-                <div class="produto-botoes">
-
-                    <button
-                        class="comprar"
-                        data-comprar="${produto.id}"
-                        type="button"
-                    >
-                        Comprar agora
-                    </button>
-
-                    <button
-                        class="adicionar"
-                        data-adicionar="${produto.id}"
-                        type="button"
-                    >
-                        + Adicionar ao carrinho
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    `;
-
-}
-
 
 function mostrarProdutos() {
 
     const html =
         produtos
-            .map(criarProduto)
+            .map(produto => {
+
+                return `
+
+                    <article class="produto">
+
+                        <img
+                            src="${escapar(produto.imagem)}"
+                            alt="${escapar(produto.nome)}"
+                            onerror="
+                                this.onerror=null;
+                                this.src='img/mercado-mm.jpg';
+                            "
+                        >
+
+                        <div class="produto-conteudo">
+
+                            <h3>
+                                ${escapar(produto.nome)}
+                            </h3>
+
+                            <div class="preco">
+                                ${dinheiro(produto.preco)}
+                            </div>
+
+                            ${
+                                produto.unidade
+                                    ?
+                                    `<div class="unidade">
+                                        por ${escapar(produto.unidade)}
+                                    </div>`
+                                    :
+                                    ""
+                            }
+
+                            <button
+                                class="comprar"
+                                onclick="comprarAgora(${produto.id})"
+                            >
+                                Comprar agora
+                            </button>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionarCarrinho(${produto.id})"
+                            >
+                                + Adicionar ao carrinho
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            })
             .join("");
 
 
     document
-        .getElementById(
-            "promocoesInicio"
-        )
+        .getElementById("produtos")
         .innerHTML = html;
 
 
     document
-        .getElementById(
-            "promocoes"
-        )
+        .getElementById("produtosInicio")
         .innerHTML = html;
-
-
-    document
-        .querySelectorAll(
-            "[data-adicionar]"
-        )
-        .forEach(botao => {
-
-            botao.addEventListener(
-                "click",
-                () => {
-
-                    adicionarCarrinho(
-                        Number(
-                            botao.dataset.adicionar
-                        )
-                    );
-
-                }
-            );
-
-        });
-
-
-    document
-        .querySelectorAll(
-            "[data-comprar]"
-        )
-        .forEach(botao => {
-
-            botao.addEventListener(
-                "click",
-                () => {
-
-                    comprarAgora(
-                        Number(
-                            botao.dataset.comprar
-                        )
-                    );
-
-                }
-            );
-
-        });
 
 }
 
@@ -724,7 +512,9 @@ function adicionarCarrinho(id) {
 
 
     if (!produto) {
+
         return;
+
     }
 
 
@@ -765,6 +555,12 @@ function adicionarCarrinho(id) {
 
     atualizarCarrinho();
 
+
+    alert(
+        produto.nome +
+        " foi adicionado ao carrinho."
+    );
+
 }
 
 
@@ -777,9 +573,21 @@ function comprarAgora(id) {
 
 
     if (!produto) {
+
         return;
+
     }
 
+
+    /*
+       IMPORTANTE:
+
+       Comprar agora NÃO abre o carrinho.
+
+       Ele coloca somente aquele produto
+       no carrinho temporariamente e vai
+       direto para o checkout.
+    */
 
     salvarCarrinho([
 
@@ -807,10 +615,153 @@ function comprarAgora(id) {
 }
 
 
-function alterarQuantidade(
-    id,
-    valor
-) {
+function totalCarrinho() {
+
+    return pegarCarrinho()
+        .reduce(
+            (total, item) =>
+                total +
+                (
+                    item.preco *
+                    item.quantidade
+                ),
+            0
+        );
+
+}
+
+
+function atualizarCarrinho() {
+
+    const carrinho =
+        pegarCarrinho();
+
+
+    const quantidade =
+        carrinho.reduce(
+            (total, item) =>
+                total + item.quantidade,
+            0
+        );
+
+
+    document
+        .getElementById("contadorCarrinho")
+        .textContent = quantidade;
+
+
+    const container =
+        document.getElementById(
+            "carrinhoItens"
+        );
+
+
+    if (carrinho.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="card">
+
+                <h3>
+                    Seu carrinho está vazio.
+                </h3>
+
+                <p>
+                    Escolha uma oferta para começar.
+                </p>
+
+            </div>
+
+        `;
+
+    } else {
+
+        container.innerHTML =
+
+            carrinho
+                .map(item => {
+
+                    return `
+
+                        <div class="item-carrinho">
+
+                            <div>
+
+                                <strong>
+                                    ${escapar(item.nome)}
+                                </strong>
+
+                                <br>
+
+                                <small>
+                                    ${dinheiro(item.preco)}
+                                </small>
+
+                                <div class="quantidade">
+
+                                    <button
+                                        onclick="alterarQuantidade(
+                                            ${item.id},
+                                            -1
+                                        )"
+                                    >
+                                        −
+                                    </button>
+
+                                    <strong>
+                                        ${item.quantidade}
+                                    </strong>
+
+                                    <button
+                                        onclick="alterarQuantidade(
+                                            ${item.id},
+                                            1
+                                        )"
+                                    >
+                                        +
+                                    </button>
+
+                                </div>
+
+                                <button
+                                    class="remover"
+                                    onclick="removerCarrinho(
+                                        ${item.id}
+                                    )"
+                                >
+                                    Remover
+                                </button>
+
+                            </div>
+
+                            <strong>
+                                ${
+                                    dinheiro(
+                                        item.preco *
+                                        item.quantidade
+                                    )
+                                }
+                            </strong>
+
+                        </div>
+
+                    `;
+
+                })
+                .join("");
+
+    }
+
+
+    document
+        .getElementById("totalCarrinho")
+        .textContent =
+            dinheiro(totalCarrinho());
+
+}
+
+
+function alterarQuantidade(id, valor) {
 
     const carrinho =
         pegarCarrinho();
@@ -823,7 +774,9 @@ function alterarQuantidade(
 
 
     if (!item) {
+
         return;
+
     }
 
 
@@ -833,10 +786,12 @@ function alterarQuantidade(
     if (item.quantidade <= 0) {
 
         salvarCarrinho(
+
             carrinho.filter(
                 produto =>
                     produto.id !== id
             )
+
         );
 
     } else {
@@ -853,225 +808,28 @@ function alterarQuantidade(
 
 function removerCarrinho(id) {
 
-    salvarCarrinho(
-
+    const carrinho =
         pegarCarrinho()
             .filter(
                 item =>
                     item.id !== id
-            )
+            );
 
-    );
 
+    salvarCarrinho(carrinho);
 
     atualizarCarrinho();
 
 }
 
 
-function totalCarrinho() {
+function abrirCarrinho() {
 
-    return pegarCarrinho()
-        .reduce(
-            (total, item) => {
+    atualizarCarrinho();
 
-                return total +
-                    item.preco *
-                    item.quantidade;
-
-            },
-            0
-        );
-
-}
-
-
-function atualizarCarrinho() {
-
-    const carrinho =
-        pegarCarrinho();
-
-
-    const contador =
-        carrinho.reduce(
-            (total, item) =>
-                total + item.quantidade,
-            0
-        );
-
-
-    document
-        .getElementById(
-            "contador"
-        )
-        .textContent = contador;
-
-
-    const container =
-        document.getElementById(
-            "carrinhoItens"
-        );
-
-
-    if (carrinho.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="vazio">
-
-                <h3>
-                    Seu carrinho está vazio.
-                </h3>
-
-                <p>
-                    Escolha uma promoção para começar.
-                </p>
-
-            </div>
-
-        `;
-
-    } else {
-
-        container.innerHTML =
-            carrinho
-                .map(item => `
-
-                    <div class="item-carrinho">
-
-                        <div>
-
-                            <h3>
-                                ${escapar(item.nome)}
-                            </h3>
-
-                            <small>
-                                ${dinheiro(item.preco)}
-                                ${
-                                    item.unidade
-                                        ? " / " +
-                                          escapar(item.unidade)
-                                        : ""
-                                }
-                            </small>
-
-                            <div class="quantidades">
-
-                                <button
-                                    type="button"
-                                    data-menos="${item.id}"
-                                >
-                                    −
-                                </button>
-
-                                <strong>
-                                    ${item.quantidade}
-                                </strong>
-
-                                <button
-                                    type="button"
-                                    data-mais="${item.id}"
-                                >
-                                    +
-                                </button>
-
-                            </div>
-
-                            <button
-                                type="button"
-                                class="remover"
-                                data-remover="${item.id}"
-                            >
-                                Remover
-                            </button>
-
-                        </div>
-
-                        <strong>
-                            ${dinheiro(
-                                item.preco *
-                                item.quantidade
-                            )}
-                        </strong>
-
-                    </div>
-
-                `)
-                .join("");
-
-
-        document
-            .querySelectorAll("[data-menos]")
-            .forEach(botao => {
-
-                botao.addEventListener(
-                    "click",
-                    () => {
-
-                        alterarQuantidade(
-                            Number(
-                                botao.dataset.menos
-                            ),
-                            -1
-                        );
-
-                    }
-                );
-
-            });
-
-
-        document
-            .querySelectorAll("[data-mais]")
-            .forEach(botao => {
-
-                botao.addEventListener(
-                    "click",
-                    () => {
-
-                        alterarQuantidade(
-                            Number(
-                                botao.dataset.mais
-                            ),
-                            1
-                        );
-
-                    }
-                );
-
-            });
-
-
-        document
-            .querySelectorAll("[data-remover]")
-            .forEach(botao => {
-
-                botao.addEventListener(
-                    "click",
-                    () => {
-
-                        removerCarrinho(
-                            Number(
-                                botao.dataset.remover
-                            )
-                        );
-
-                    }
-                );
-
-            });
-
-    }
-
-
-    document
-        .getElementById(
-            "carrinhoTotal"
-        )
-        .textContent =
-        dinheiro(
-            totalCarrinho()
-        );
+    abrirModal(
+        "modalCarrinho"
+    );
 
 }
 
@@ -1084,9 +842,7 @@ function abrirModal(id) {
 
     document
         .getElementById(id)
-        .classList.remove(
-            "escondido"
-        );
+        .classList.remove("oculto");
 
 }
 
@@ -1095,9 +851,7 @@ function fecharModal(id) {
 
     document
         .getElementById(id)
-        .classList.add(
-            "escondido"
-        );
+        .classList.add("oculto");
 
 }
 
@@ -1108,9 +862,11 @@ function fecharModal(id) {
 
 function abrirCheckout() {
 
-    if (
-        pegarCarrinho().length === 0
-    ) {
+    const carrinho =
+        pegarCarrinho();
+
+
+    if (carrinho.length === 0) {
 
         alert(
             "Seu carrinho está vazio."
@@ -1123,13 +879,18 @@ function abrirCheckout() {
 
     atualizarResumo();
 
-    fecharModal("carrinhoModal");
+    fecharModal(
+        "modalCarrinho"
+    );
 
-    abrirModal("checkoutModal");
+    abrirModal(
+        "modalCheckout"
+    );
 
-    atualizarEntrega();
 
-    atualizarTroco();
+    alterarEntrega();
+
+    alterarPagamento();
 
 }
 
@@ -1140,72 +901,68 @@ function atualizarResumo() {
         pegarCarrinho();
 
 
+    let html =
+        "<strong>Produtos:</strong><br><br>";
+
+
+    carrinho.forEach(item => {
+
+        html +=
+            item.quantidade +
+            "x " +
+            escapar(item.nome) +
+            " — " +
+            dinheiro(
+                item.preco *
+                item.quantidade
+            ) +
+            "<br>";
+
+    });
+
+
+    html +=
+        "<br><strong>Total: " +
+        dinheiro(totalCarrinho()) +
+        "</strong>";
+
+
     document
         .getElementById(
             "resumoPedido"
         )
-        .innerHTML = `
-
-            <strong>
-                Resumo da compra
-            </strong>
-
-            <br>
-
-            ${
-                carrinho
-                    .map(item => `
-
-                        ${item.quantidade}x
-                        ${escapar(item.nome)}
-                        —
-                        ${dinheiro(
-                            item.preco *
-                            item.quantidade
-                        )}
-
-                        <br>
-
-                    `)
-                    .join("")
-            }
-
-            <br>
-
-            <strong>
-                Total:
-                ${dinheiro(totalCarrinho())}
-            </strong>
-
-        `;
+        .innerHTML = html;
 
 }
 
 
-function atualizarEntrega() {
+function alterarEntrega() {
 
     const tipo =
-        document.getElementById(
-            "tipoEntrega"
-        ).value;
+        document
+            .getElementById(
+                "tipoEntrega"
+            )
+            .value;
 
 
     const area =
-        document.getElementById(
-            "enderecoArea"
-        );
+        document
+            .getElementById(
+                "enderecoArea"
+            );
 
 
     if (tipo === "entrega") {
 
         area.classList.remove(
-            "escondido"
+            "oculto"
         );
 
     } else {
 
         area.classList.add(
-            "escondido"
+            "oculto"
         );
 
     }
@@ -1213,30 +970,33 @@ function atualizarEntrega() {
 }
 
 
-function atualizarTroco() {
+function alterarPagamento() {
 
-    const forma =
-        document.getElementById(
-            "pagamento"
-        ).value;
+    const pagamento =
+        document
+            .getElementById(
+                "pagamento"
+            )
+            .value;
 
 
     const area =
-        document.getElementById(
-            "trocoArea"
-        );
+        document
+            .getElementById(
+                "trocoArea"
+            );
 
 
-    if (forma === "dinheiro") {
+    if (pagamento === "dinheiro") {
 
         area.classList.remove(
-            "escondido"
+            "oculto"
         );
 
     } else {
 
         area.classList.add(
-            "escondido"
+            "oculto"
         );
 
         document
@@ -1247,7 +1007,7 @@ function atualizarTroco() {
 
         document
             .getElementById(
-                "trocoResultado"
+                "resultadoTroco"
             )
             .textContent = "";
 
@@ -1260,9 +1020,11 @@ function calcularTroco() {
 
     const valor =
         Number(
-            document.getElementById(
-                "trocoPara"
-            ).value
+            document
+                .getElementById(
+                    "trocoPara"
+                )
+                .value
         );
 
 
@@ -1271,9 +1033,10 @@ function calcularTroco() {
 
 
     const resultado =
-        document.getElementById(
-            "trocoResultado"
-        );
+        document
+            .getElementById(
+                "resultadoTroco"
+            );
 
 
     if (!valor) {
@@ -1288,7 +1051,7 @@ function calcularTroco() {
     if (valor < total) {
 
         resultado.textContent =
-            "O valor é menor que o total.";
+            "O valor informado é menor que o total.";
 
         resultado.style.color =
             "#d62828";
@@ -1305,7 +1068,7 @@ function calcularTroco() {
         );
 
     resultado.style.color =
-        "#18a558";
+        "#19a857";
 
 }
 
@@ -1314,10 +1077,7 @@ function calcularTroco() {
    FINALIZAR PEDIDO
 ===================================================== */
 
-function finalizarPedido(evento) {
-
-    evento.preventDefault();
-
+function finalizarPedido() {
 
     const carrinho =
         pegarCarrinho();
@@ -1342,19 +1102,25 @@ function finalizarPedido(evento) {
 
 
     const tipo =
-        document.getElementById(
-            "tipoEntrega"
-        ).value;
+        document
+            .getElementById(
+                "tipoEntrega"
+            )
+            .value;
 
 
     const pagamento =
-        document.getElementById(
-            "pagamento"
-        ).value;
+        document
+            .getElementById(
+                "pagamento"
+            )
+            .value;
 
 
     let endereco = null;
 
+
+    /* ENTREGA */
 
     if (tipo === "entrega") {
 
@@ -1401,14 +1167,19 @@ function finalizarPedido(evento) {
         endereco = {
 
             rua,
+
             numero,
+
             bairro,
+
             referencia
 
         };
 
     }
 
+
+    /* DINHEIRO */
 
     let trocoPara = null;
 
@@ -1450,9 +1221,11 @@ function finalizarPedido(evento) {
     }
 
 
+    /* PEDIDO */
+
     const pedido = {
 
-        id: idNovo(),
+        id: gerarId(),
 
         data:
             new Date().toISOString(),
@@ -1463,88 +1236,122 @@ function finalizarPedido(evento) {
                 : "Cliente",
 
         itens:
-            carrinho.map(item => ({
-                ...item
-            })),
+            carrinho.map(
+                item => ({
+                    ...item
+                })
+            ),
 
         total:
             totalCarrinho(),
 
-        tipoEntrega: tipo,
+        tipoEntrega:
+            tipo,
 
-        endereco,
+        endereco:
+            endereco,
 
-        pagamento,
+        pagamento:
+            pagamento,
 
-        trocoPara,
+        trocoPara:
+            trocoPara,
 
-        troco
+        troco:
+            troco
 
     };
 
 
-    salvarHistorico(
+    /* HISTÓRICO */
+
+    const historico =
+        carregar(
+            CHAVE_HISTORICO,
+            []
+        );
+
+
+    historico.unshift(
         pedido
     );
 
 
+    salvar(
+        CHAVE_HISTORICO,
+        historico
+    );
+
+
+    /* WHATSAPP */
+
     const mensagem =
-        criarMensagemWhatsApp(
+        montarMensagem(
             pedido
         );
 
 
     /*
-     * Limpa o carrinho antes de enviar.
-     */
+       Limpamos o carrinho depois
+       de montar o pedido.
+    */
 
     salvarCarrinho([]);
 
     atualizarCarrinho();
 
 
-    /*
-     * Fecha o checkout.
-     */
-
     fecharModal(
-        "checkoutModal"
+        "modalCheckout"
     );
 
 
     /*
-     * Abre WhatsApp.
-     */
+       Abre o WhatsApp.
+    */
 
-    window.open(
+    const url =
         "https://wa.me/" +
         WHATSAPP +
         "?text=" +
         encodeURIComponent(
             mensagem
-        ),
+        );
+
+
+    window.open(
+        url,
         "_blank"
     );
 
 
     /*
-     * Mostra mensagem quando
-     * o cliente volta ao site.
-     */
+       Mostra a mensagem de
+       agradecimento no próprio site.
+    */
 
-    localStorage.setItem(
-        "mercadoMM_compraEnviada",
-        "true"
+    setTimeout(
+        () => {
+
+            abrirModal(
+                "modalSucesso"
+            );
+
+        },
+        500
     );
+
+
+    mostrarHistorico();
 
 }
 
 
 /* =====================================================
-   WHATSAPP
+   MENSAGEM WHATSAPP
 ===================================================== */
 
-function criarMensagemWhatsApp(pedido) {
+function montarMensagem(pedido) {
 
     let mensagem =
         "*NOVO PEDIDO - MERCADO MM*\n\n";
@@ -1560,30 +1367,34 @@ function criarMensagemWhatsApp(pedido) {
         "*PRODUTOS:*\n";
 
 
-    pedido.itens.forEach(item => {
+    pedido.itens.forEach(
+        item => {
 
-        mensagem +=
-            "• " +
-            item.quantidade +
-            "x " +
-            item.nome +
-            " — " +
-            dinheiro(
-                item.preco *
-                item.quantidade
-            ) +
-            "\n";
+            mensagem +=
+                "• " +
+                item.quantidade +
+                "x " +
+                item.nome +
+                " — " +
+                dinheiro(
+                    item.preco *
+                    item.quantidade
+                ) +
+                "\n";
 
-    });
+        }
+    );
 
 
     mensagem +=
-        "\n*TOTAL: " +
+        "\n*TOTAL:* " +
         dinheiro(
             pedido.total
         ) +
-        "*\n\n";
+        "\n\n";
 
+
+    /* ENTREGA */
 
     if (
         pedido.tipoEntrega ===
@@ -1593,22 +1404,18 @@ function criarMensagemWhatsApp(pedido) {
         mensagem +=
             "*RECEBIMENTO:* Entrega\n\n";
 
-
         mensagem +=
             "*ENDEREÇO:*\n";
-
 
         mensagem +=
             "Rua: " +
             pedido.endereco.rua +
             "\n";
 
-
         mensagem +=
             "Número: " +
             pedido.endereco.numero +
             "\n";
-
 
         mensagem +=
             "Bairro: " +
@@ -1637,6 +1444,8 @@ function criarMensagemWhatsApp(pedido) {
 
     }
 
+
+    /* PAGAMENTO */
 
     const formas = {
 
@@ -1697,7 +1506,7 @@ function criarMensagemWhatsApp(pedido) {
    HISTÓRICO
 ===================================================== */
 
-function salvarHistorico(pedido) {
+function mostrarHistorico() {
 
     const historico =
         carregar(
@@ -1705,24 +1514,6 @@ function salvarHistorico(pedido) {
             []
         );
 
-
-    historico.unshift(
-        pedido
-    );
-
-
-    salvar(
-        CHAVE_HISTORICO,
-        historico
-    );
-
-
-    mostrarHistorico();
-
-}
-
-
-function mostrarHistorico() {
 
     const container =
         document.getElementById(
@@ -1730,18 +1521,13 @@ function mostrarHistorico() {
         );
 
 
-    const historico =
-        carregar(
-            CHAVE_HISTORICO,
-            []
-        );
-
-
-    if (historico.length === 0) {
+    if (
+        historico.length === 0
+    ) {
 
         container.innerHTML = `
 
-            <div class="vazio">
+            <div class="card centralizado">
 
                 <h3>
                     Nenhum pedido ainda.
@@ -1761,6 +1547,7 @@ function mostrarHistorico() {
 
 
     container.innerHTML =
+
         historico
             .map(pedido => {
 
@@ -1780,9 +1567,9 @@ function mostrarHistorico() {
                             Pedido ${escapar(pedido.id)}
                         </h3>
 
-                        <div class="data">
+                        <small>
                             ${data}
-                        </div>
+                        </small>
 
                         <ul>
 
@@ -1791,6 +1578,7 @@ function mostrarHistorico() {
                                     .map(item => `
 
                                         <li>
+
                                             ${item.quantidade}x
                                             ${escapar(item.nome)}
                                             —
@@ -1798,6 +1586,7 @@ function mostrarHistorico() {
                                                 item.preco *
                                                 item.quantidade
                                             )}
+
                                         </li>
 
                                     `)
@@ -1806,20 +1595,22 @@ function mostrarHistorico() {
 
                         </ul>
 
-                        <p>
-                            <strong>
-                                Total:
-                                ${dinheiro(pedido.total)}
-                            </strong>
-                        </p>
+                        <strong>
+                            Total:
+                            ${dinheiro(pedido.total)}
+                        </strong>
 
                         <p>
+
                             ${
                                 pedido.tipoEntrega ===
                                 "entrega"
-                                    ? "🚚 Entrega"
-                                    : "🏪 Retirada"
+                                    ?
+                                    "🚚 Entrega"
+                                    :
+                                    "🏪 Retirada"
                             }
+
                         </p>
 
                     </div>
@@ -1846,105 +1637,6 @@ function pegarLista() {
 }
 
 
-function mostrarLista() {
-
-    const lista =
-        pegarLista();
-
-
-    const container =
-        document.getElementById(
-            "itensLista"
-        );
-
-
-    if (lista.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="vazio">
-
-                Sua lista está vazia.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        lista
-            .map(item => `
-
-                <div class="lista-item">
-
-                    <div>
-
-                        <strong>
-                            ${item.quantidade}x
-                            ${escapar(item.produto)}
-                        </strong>
-
-                        ${
-                            item.marca
-                                ? `
-                                    <br>
-                                    Marca:
-                                    ${escapar(item.marca)}
-                                `
-                                : ""
-                        }
-
-                        ${
-                            item.obs
-                                ? `
-                                    <br>
-                                    Obs.:
-                                    ${escapar(item.obs)}
-                                `
-                                : ""
-                        }
-
-                    </div>
-
-                    <button
-                        type="button"
-                        data-remover-lista="${item.id}"
-                    >
-                        Remover
-                    </button>
-
-                </div>
-
-            `)
-            .join("");
-
-
-    document
-        .querySelectorAll(
-            "[data-remover-lista]"
-        )
-        .forEach(botao => {
-
-            botao.addEventListener(
-                "click",
-                () => {
-
-                    removerLista(
-                        botao.dataset.removerLista
-                    );
-
-                }
-            );
-
-        });
-
-}
-
-
 function adicionarLista() {
 
     const produto =
@@ -1955,6 +1647,7 @@ function adicionarLista() {
             .value
             .trim();
 
+
     const marca =
         document
             .getElementById(
@@ -1963,6 +1656,7 @@ function adicionarLista() {
             .value
             .trim();
 
+
     const quantidade =
         document
             .getElementById(
@@ -1970,6 +1664,7 @@ function adicionarLista() {
             )
             .value
             .trim();
+
 
     const obs =
         document
@@ -1997,7 +1692,7 @@ function adicionarLista() {
 
     lista.push({
 
-        id: idNovo(),
+        id: gerarId(),
 
         produto,
 
@@ -2047,6 +1742,78 @@ function adicionarLista() {
 }
 
 
+function mostrarLista() {
+
+    const lista =
+        pegarLista();
+
+
+    const container =
+        document.getElementById(
+            "listaItens"
+        );
+
+
+    if (
+        lista.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>Nenhum item na lista.</p>";
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+
+        lista
+            .map(item => `
+
+                <div class="lista-item">
+
+                    <div>
+
+                        <strong>
+                            ${item.quantidade}x
+                            ${escapar(item.produto)}
+                        </strong>
+
+                        ${
+                            item.marca
+                                ?
+                                `<br>Marca:
+                                ${escapar(item.marca)}`
+                                :
+                                ""
+                        }
+
+                        ${
+                            item.obs
+                                ?
+                                `<br>Obs.:
+                                ${escapar(item.obs)}`
+                                :
+                                ""
+                        }
+
+                    </div>
+
+                    <button
+                        onclick="removerLista('${item.id}')"
+                    >
+                        Remover
+                    </button>
+
+                </div>
+
+            `)
+            .join("");
+
+}
+
+
 function removerLista(id) {
 
     const lista =
@@ -2071,21 +1838,14 @@ function removerLista(id) {
 
 function limparLista() {
 
-    const lista =
-        pegarLista();
-
-
-    if (lista.length === 0) {
-        return;
-    }
-
-
     if (
         !confirm(
-            "Deseja realmente limpar sua lista?"
+            "Deseja limpar sua lista?"
         )
     ) {
+
         return;
+
     }
 
 
@@ -2100,13 +1860,15 @@ function limparLista() {
 }
 
 
-function enviarListaWhatsApp() {
+function enviarLista() {
 
     const lista =
         pegarLista();
 
 
-    if (lista.length === 0) {
+    if (
+        lista.length === 0
+    ) {
 
         alert(
             "Sua lista está vazia."
@@ -2138,50 +1900,52 @@ function enviarListaWhatsApp() {
     }
 
 
-    lista.forEach(item => {
-
-        mensagem +=
-            "• " +
-            item.quantidade +
-            "x " +
-            item.produto;
-
-
-        if (item.marca) {
+    lista.forEach(
+        item => {
 
             mensagem +=
-                " — " +
-                item.marca;
+                "• " +
+                item.quantidade +
+                "x " +
+                item.produto;
+
+
+            if (item.marca) {
+
+                mensagem +=
+                    " — " +
+                    item.marca;
+
+            }
+
+
+            if (item.obs) {
+
+                mensagem +=
+                    " (" +
+                    item.obs +
+                    ")";
+
+            }
+
+
+            mensagem += "\n";
 
         }
+    );
 
 
-        if (item.obs) {
-
-            mensagem +=
-                " (" +
-                item.obs +
-                ")";
-
-        }
-
-
-        mensagem += "\n";
-
-    });
-
-
-    mensagem +=
-        "\nObrigado!";
-
-
-    window.open(
+    const url =
         "https://wa.me/" +
         WHATSAPP +
         "?text=" +
         encodeURIComponent(
             mensagem
-        ),
+        );
+
+
+    window.open(
+        url,
         "_blank"
     );
 
@@ -2189,251 +1953,93 @@ function enviarListaWhatsApp() {
 
 
 /* =====================================================
-   EVENTOS
+   CONTA
 ===================================================== */
 
-function configurarEventos() {
+function abrirConta() {
 
-    document
-        .getElementById(
-            "irCadastro"
-        )
-        .addEventListener(
-            "click",
-            mostrarCadastro
+    const usuario =
+        carregar(
+            CHAVE_USUARIO,
+            null
         );
 
 
-    document
-        .getElementById(
-            "irLogin"
-        )
-        .addEventListener(
-            "click",
-            mostrarLogin
-        );
+    if (!usuario) {
+
+        return;
+
+    }
 
 
     document
         .getElementById(
-            "cadastroForm"
+            "nomeConta"
         )
-        .addEventListener(
-            "submit",
-            cadastrar
-        );
+        .value =
+            usuario.nome;
 
 
-    document
-        .getElementById(
-            "loginForm"
-        )
-        .addEventListener(
-            "submit",
-            login
-        );
-
-
-    document
-        .getElementById(
-            "btnCarrinho"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                atualizarCarrinho();
-
-                abrirModal(
-                    "carrinhoModal"
-                );
-
-            }
-        );
-
-
-    document
-        .getElementById(
-            "finalizarCarrinho"
-        )
-        .addEventListener(
-            "click",
-            abrirCheckout
-        );
-
-
-    document
-        .getElementById(
-            "btnConta"
-        )
-        .addEventListener(
-            "click",
-            abrirConta
-        );
-
-
-    document
-        .getElementById(
-            "contaForm"
-        )
-        .addEventListener(
-            "submit",
-            salvarConta
-        );
-
-
-    document
-        .getElementById(
-            "sairConta"
-        )
-        .addEventListener(
-            "click",
-            sairConta
-        );
-
-
-    document
-        .getElementById(
-            "tipoEntrega"
-        )
-        .addEventListener(
-            "change",
-            atualizarEntrega
-        );
-
-
-    document
-        .getElementById(
-            "pagamento"
-        )
-        .addEventListener(
-            "change",
-            atualizarTroco
-        );
-
-
-    document
-        .getElementById(
-            "trocoPara"
-        )
-        .addEventListener(
-            "input",
-            calcularTroco
-        );
-
-
-    document
-        .getElementById(
-            "checkoutForm"
-        )
-        .addEventListener(
-            "submit",
-            finalizarPedido
-        );
-
-
-    document
-        .getElementById(
-            "adicionarLista"
-        )
-        .addEventListener(
-            "click",
-            adicionarLista
-        );
-
-
-    document
-        .getElementById(
-            "limparLista"
-        )
-        .addEventListener(
-            "click",
-            limparLista
-        );
-
-
-    document
-        .getElementById(
-            "enviarLista"
-        )
-        .addEventListener(
-            "click",
-            enviarListaWhatsApp
-        );
-
-
-    document
-        .querySelectorAll(
-            "[data-fechar]"
-        )
-        .forEach(botao => {
-
-            botao.addEventListener(
-                "click",
-                () => {
-
-                    fecharModal(
-                        botao.dataset.fechar
-                    );
-
-                }
-            );
-
-        });
-
-
-    document
-        .getElementById(
-            "fecharRetorno"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                fecharModal(
-                    "retornoModal"
-                );
-
-            }
-        );
-
-
-    configurarNavegacao();
+    abrirModal(
+        "modalConta"
+    );
 
 }
 
 
-/* =====================================================
-   RETORNO DO WHATSAPP
-===================================================== */
+function salvarNome() {
 
-function verificarRetorno() {
-
-    const compra =
-        localStorage.getItem(
-            "mercadoMM_compraEnviada"
+    const usuario =
+        carregar(
+            CHAVE_USUARIO,
+            null
         );
 
 
-    if (
-        compra !== "true"
-    ) {
+    if (!usuario) {
+
         return;
+
     }
 
 
-    localStorage.removeItem(
-        "mercadoMM_compraEnviada"
+    const nome =
+        document
+            .getElementById(
+                "nomeConta"
+            )
+            .value
+            .trim();
+
+
+    if (nome.length < 2) {
+
+        alert(
+            "Digite um nome válido."
+        );
+
+        return;
+
+    }
+
+
+    usuario.nome = nome;
+
+
+    salvar(
+        CHAVE_USUARIO,
+        usuario
     );
 
 
-    setTimeout(() => {
+    fecharModal(
+        "modalConta"
+    );
 
-        abrirModal(
-            "retornoModal"
-        );
 
-    }, 500);
+    alert(
+        "Nome atualizado."
+    );
 
 }
 
@@ -2446,8 +2052,6 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        configurarEventos();
-
         mostrarProdutos();
 
         atualizarCarrinho();
@@ -2457,12 +2061,6 @@ document.addEventListener(
         mostrarHistorico();
 
 
-        const logado =
-            localStorage.getItem(
-                CHAVE_LOGIN
-            ) === "true";
-
-
         const usuario =
             carregar(
                 CHAVE_USUARIO,
@@ -2470,51 +2068,49 @@ document.addEventListener(
             );
 
 
+        const logado =
+            localStorage.getItem(
+                CHAVE_LOGIN
+            ) === "true";
+
+
         if (
-            logado &&
-            usuario
+            usuario &&
+            logado
         ) {
 
             entrarNoSistema();
 
         } else {
 
-            sairDoSistema();
+            document
+                .getElementById(
+                    "sistema"
+                )
+                .classList.add(
+                    "oculto"
+                );
+
+            document
+                .getElementById(
+                    "telaLogin"
+                )
+                .classList.remove(
+                    "oculto"
+                );
 
 
-            /*
-             * Se ainda não existe conta,
-             * abre o cadastro.
-             */
+            if (usuario) {
 
-            if (!usuario) {
-
-                mostrarCadastro();
+                mostrarLogin();
 
             } else {
 
-                mostrarLogin();
+                mostrarCadastro();
 
             }
 
         }
-
-
-        verificarRetorno();
-
-    }
-);
-
-
-/* =====================================================
-   RETORNO AO SITE
-===================================================== */
-
-window.addEventListener(
-    "pageshow",
-    () => {
-
-        verificarRetorno();
 
     }
 );
