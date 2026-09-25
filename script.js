@@ -1,396 +1,367 @@
 "use strict";
 
-
 /* =====================================================
-   CONFIGURAÇÕES
+   CONFIGURAÇÃO
 ===================================================== */
 
 const WHATSAPP = "5519981123401";
 
-const CHAVE_USUARIO = "mercadoMM_usuario";
-const CHAVE_LOGIN = "mercadoMM_login";
-const CHAVE_CARRINHO = "mercadoMM_carrinho";
-const CHAVE_LISTA = "mercadoMM_lista";
-const CHAVE_HISTORICO = "mercadoMM_historico";
+let carrinho =
+    JSON.parse(
+        localStorage.getItem("mercadoMM_carrinho")
+    ) || [];
+
+let setorAtual = "";
+
+
+/* =====================================================
+   NOMES DOS SETORES
+===================================================== */
+
+const setores = {
+
+    acougue: "🥩 Açougue",
+    hortifruti: "🥬 Hortifruti",
+    laticinios: "🥛 Laticínios",
+    bebidas: "🥤 Bebidas",
+    biscoitos: "🍪 Biscoitos e Snacks",
+    limpeza: "🧹 Limpeza",
+    higiene: "🧴 Higiene e Perfumaria",
+    pet: "🐶 Pet Shop",
+    padaria: "🥖 Padaria",
+    outros: "📦 Outros"
+
+};
 
 
 /* =====================================================
    PRODUTOS
 ===================================================== */
 
-const produtos = [
+const produtos = {
 
-    {
-        id: 1,
-        nome: "Contra-filé",
-        preco: 28.90,
-        unidade: "kg",
-        imagem: "img/contra-file.jpg"
-    },
+    acougue: [
 
-    {
-        id: 2,
-        nome: "Coca-Cola 2 litros",
-        preco: 8.99,
-        unidade: "",
-        imagem: "img/coca-cola-2l.jpg"
-    },
+        "Carne bovina - Alcatra",
+        "Carne bovina - Contrafilé",
+        "Carne bovina - Picanha",
+        "Carne bovina - Maminha",
+        "Carne bovina - Fraldinha",
+        "Carne bovina - Patinho",
+        "Carne bovina - Coxão mole",
+        "Carne bovina - Coxão duro",
+        "Carne bovina - Acém",
+        "Carne bovina - Músculo",
+        "Carne bovina - Costela",
+        "Carne bovina - Cupim",
 
-    {
-        id: 3,
-        nome: "Arroz Kome Tudo 5 kg",
-        preco: 15.90,
-        unidade: "",
-        imagem: "img/arroz-kome-tudo-5kg.jpg"
-    },
+        "Carne suína - Pernil",
+        "Carne suína - Lombo",
+        "Carne suína - Costela",
+        "Carne suína - Panceta",
+        "Carne suína - Bisteca",
+        "Carne suína - Paleta",
+        "Carne suína - Copa",
+        "Carne suína - Toucinho",
 
-    {
-        id: 4,
-        nome: "Sabão em Pó OMO 800 g",
-        preco: 12.90,
-        unidade: "",
-        imagem: "img/omo-800g.jpg"
-    }
+        "Frango - Peito",
+        "Frango - Coxa",
+        "Frango - Sobrecoxa",
+        "Frango - Asa",
+        "Frango - Coxinha da asa",
+        "Frango - Filezinho",
+        "Frango - Coração",
+        "Frango - Pescoço",
+        "Frango - Fígado",
+        "Frango - Pé",
 
+        "Para churrasco - Alcatra",
+        "Para churrasco - Picanha",
+        "Para churrasco - Maminha",
+        "Para churrasco - Fraldinha",
+        "Para churrasco - Costela",
+        "Para churrasco - Cupim",
+        "Para churrasco - Contrafilé",
+        "Para churrasco - Linguiça",
+        "Para churrasco - Asa de frango",
+        "Para churrasco - Coração de frango"
+
+    ],
+
+    hortifruti: [
+
+        "Alface",
+        "Couve",
+        "Repolho",
+        "Rúcula",
+        "Agrião",
+        "Espinafre",
+
+        "Tomate",
+        "Cebola",
+        "Alho",
+        "Batata",
+        "Batata-doce",
+        "Mandioca",
+        "Cenoura",
+        "Beterraba",
+        "Abobrinha",
+        "Berinjela",
+        "Pepino",
+        "Pimentão",
+        "Brócolis",
+        "Couve-flor",
+        "Chuchu",
+        "Milho verde",
+
+        "Banana",
+        "Maçã",
+        "Laranja",
+        "Limão",
+        "Mamão",
+        "Melancia",
+        "Melão",
+        "Abacaxi",
+        "Uva",
+        "Morango",
+        "Manga",
+        "Abacate",
+        "Pera",
+        "Kiwi",
+
+        "Salsa",
+        "Cebolinha",
+        "Cheiro-verde",
+        "Coentro",
+
+        "Para churrasco - Cebola",
+        "Para churrasco - Tomate",
+        "Para churrasco - Pimentão",
+        "Para churrasco - Alho",
+        "Para churrasco - Limão",
+        "Para churrasco - Mandioca"
+
+    ],
+
+    laticinios: [
+
+        "Leite",
+        "Leite em pó",
+        "Queijo",
+        "Mussarela",
+        "Presunto",
+        "Requeijão",
+        "Manteiga",
+        "Margarina",
+        "Iogurte",
+        "Creme de leite",
+        "Leite condensado",
+        "Achocolatado",
+        "Coalhada"
+
+    ],
+
+    bebidas: [
+
+        "Água",
+        "Água com gás",
+        "Refrigerante",
+        "Suco",
+        "Néctar",
+        "Energético",
+        "Isotônico",
+        "Chá",
+        "Café pronto"
+
+    ],
+
+    biscoitos: [
+
+        "Biscoito recheado",
+        "Biscoito doce",
+        "Biscoito salgado",
+        "Biscoito de água e sal",
+        "Wafer",
+        "Torrada",
+        "Pipoca",
+        "Salgadinho",
+        "Amendoim",
+        "Castanhas",
+        "Pão de forma",
+        "Pão de forma integral",
+        "Bolo de pacotinho",
+        "Bolinho pequeno"
+
+    ],
+
+    limpeza: [
+
+        "Sabão em pó",
+        "Sabão líquido",
+        "Amaciante",
+        "Detergente",
+        "Desinfetante",
+        "Água sanitária",
+        "Multiuso",
+        "Limpa-vidros",
+        "Esponja",
+        "Saco para lixo",
+        "Papel toalha",
+        "Vassoura",
+        "Rodo",
+        "Pano de chão",
+        "Balde",
+        "Lustra-móveis"
+
+    ],
+
+    higiene: [
+
+        "Sabonete",
+        "Shampoo",
+        "Condicionador",
+        "Creme dental",
+        "Escova de dentes",
+        "Fio dental",
+        "Desodorante",
+        "Papel higiênico",
+        "Absorvente",
+        "Algodão",
+        "Cotonete",
+        "Barbeador",
+        "Creme para cabelo",
+        "Sabonete líquido",
+        "Hidratante"
+
+    ],
+
+    pet: [
+
+        "Ração para cachorro",
+        "Ração para gato",
+        "Petiscos",
+        "Areia para gato",
+        "Tapete higiênico",
+        "Shampoo para animais",
+        "Brinquedo para animais",
+        "Osso para cachorro"
+
+    ],
+
+    padaria: [
+
+        "Pão francês",
+        "Pão de forma",
+        "Pão de forma integral",
+        "Pão integral",
+        "Pão doce",
+        "Pão de queijo",
+        "Rosca",
+        "Bolo",
+        "Bolo de pacotinho",
+        "Bolinho pequeno",
+        "Torta",
+        "Salgado",
+        "Croissant",
+        "Presunto",
+        "Mussarela",
+        "Queijo"
+
+    ],
+
+    outros: [
+
+        "Carvão",
+        "Fósforo",
+        "Isqueiro",
+        "Pilhas",
+        "Guardanapo",
+        "Papel alumínio",
+        "Filme plástico",
+        "Sacos para freezer",
+        "Velas",
+        "Papel filme",
+        "Papel manteiga"
+
+    ]
+
+};
+
+
+/* =====================================================
+   SETORES VENDIDOS POR KG
+===================================================== */
+
+const setoresKg = [
+    "acougue",
+    "hortifruti",
+    "padaria"
 ];
 
 
 /* =====================================================
-   FUNÇÕES BÁSICAS
+   SETORES COM MARCA
 ===================================================== */
 
-function dinheiro(valor) {
-
-    return Number(valor).toLocaleString(
-        "pt-BR",
-        {
-            style: "currency",
-            currency: "BRL"
-        }
-    );
-
-}
+const setoresComMarca = [
+    "laticinios",
+    "bebidas",
+    "biscoitos",
+    "padaria"
+];
 
 
-function salvar(chave, valor) {
+/* =====================================================
+   MENU
+===================================================== */
 
-    localStorage.setItem(
-        chave,
-        JSON.stringify(valor)
-    );
+function alternarMenu() {
 
-}
+    const menu =
+        document.getElementById("menuPrincipal");
 
+    if (!menu) return;
 
-function carregar(chave, padrao) {
-
-    try {
-
-        const valor =
-            localStorage.getItem(chave);
-
-        if (!valor) {
-
-            return padrao;
-
-        }
-
-        return JSON.parse(valor);
-
-    } catch {
-
-        return padrao;
-
-    }
-
-}
-
-
-function gerarId() {
-
-    return Date.now() +
-        "-" +
-        Math.floor(Math.random() * 9999);
-
-}
-
-
-function escapar(texto) {
-
-    return String(texto ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    menu.classList.toggle("menu-aberto");
 
 }
 
 
 /* =====================================================
-   LOGIN
+   ABRIR SEÇÃO
 ===================================================== */
 
-function mostrarCadastro() {
+function abrirSecao(id) {
 
     document
-        .getElementById("loginArea")
-        .classList.add("oculto");
+        .querySelectorAll(".secao")
+        .forEach(secao => {
 
-    document
-        .getElementById("cadastroArea")
-        .classList.remove("oculto");
+            secao.classList.remove("ativa");
 
-}
+        });
 
-
-function mostrarLogin() {
-
-    document
-        .getElementById("cadastroArea")
-        .classList.add("oculto");
-
-    document
-        .getElementById("loginArea")
-        .classList.remove("oculto");
-
-}
-
-
-function cadastrar() {
-
-    const nome =
-        document
-            .getElementById("cadastroNome")
-            .value
-            .trim();
-
-    const senha =
-        document
-            .getElementById("cadastroSenha")
-            .value;
-
-    const senha2 =
-        document
-            .getElementById("cadastroSenha2")
-            .value;
-
-    const erro =
-        document
-            .getElementById("erroCadastro");
-
-    erro.textContent = "";
-
-
-    if (nome.length < 2) {
-
-        erro.textContent =
-            "Digite seu nome.";
-
-        return;
-
-    }
-
-
-    if (senha.length < 4) {
-
-        erro.textContent =
-            "A senha precisa ter pelo menos 4 caracteres.";
-
-        return;
-
-    }
-
-
-    if (senha !== senha2) {
-
-        erro.textContent =
-            "As senhas não são iguais.";
-
-        return;
-
-    }
-
-
-    const usuarioExistente =
-        carregar(
-            CHAVE_USUARIO,
-            null
-        );
-
-
-    if (usuarioExistente) {
-
-        erro.textContent =
-            "Já existe uma conta neste aparelho.";
-
-        return;
-
-    }
-
-
-    const usuario = {
-
-        id: gerarId(),
-
-        nome: nome,
-
-        senha: senha,
-
-        criadoEm:
-            new Date().toISOString()
-
-    };
-
-
-    salvar(
-        CHAVE_USUARIO,
-        usuario
-    );
-
-
-    localStorage.setItem(
-        CHAVE_LOGIN,
-        "true"
-    );
-
-
-    entrarNoSistema();
-
-    mostrarPagina("inicio");
-
-}
-
-
-/* =====================================================
-   ENTRAR
-===================================================== */
-
-function entrar() {
-
-    const nome =
-        document
-            .getElementById("loginNome")
-            .value
-            .trim();
-
-    const senha =
-        document
-            .getElementById("loginSenha")
-            .value;
-
-    const erro =
-        document
-            .getElementById("erroLogin");
-
-
-    erro.textContent = "";
-
-
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
-        );
-
-
-    if (!usuario) {
-
-        erro.textContent =
-            "Nenhuma conta encontrada.";
-
-        return;
-
-    }
-
-
-    if (
-        nome.toLowerCase() !==
-        usuario.nome.toLowerCase()
-        ||
-        senha !== usuario.senha
-    ) {
-
-        erro.textContent =
-            "Nome ou senha incorretos.";
-
-        return;
-
-    }
-
-
-    localStorage.setItem(
-        CHAVE_LOGIN,
-        "true"
-    );
-
-
-    entrarNoSistema();
-
-    mostrarPagina("inicio");
-
-}
-
-
-function entrarNoSistema() {
-
-    document
-        .getElementById("telaLogin")
-        .classList.add("oculto");
-
-    document
-        .getElementById("sistema")
-        .classList.remove("oculto");
-
-}
-
-
-function sair() {
-
-    localStorage.removeItem(
-        CHAVE_LOGIN
-    );
-
-    document
-        .getElementById("sistema")
-        .classList.add("oculto");
-
-    document
-        .getElementById("telaLogin")
-        .classList.remove("oculto");
-
-    mostrarLogin();
-
-}
-
-
-/* =====================================================
-   NAVEGAÇÃO
-===================================================== */
-
-function mostrarPagina(id) {
-
-    document
-        .querySelectorAll(".pagina")
-        .forEach(
-            pagina =>
-                pagina.classList.remove("ativa")
-        );
-
-
-    const pagina =
+    const secao =
         document.getElementById(id);
 
+    if (!secao) return;
 
-    if (!pagina) {
+    secao.classList.add("ativa");
 
-        return;
+    const menu =
+        document.getElementById("menuPrincipal");
 
+    if (menu) {
+        menu.classList.remove("menu-aberto");
     }
 
+    if (id === "carrinho") {
+        atualizarCarrinho();
+    }
 
-    pagina.classList.add("ativa");
-
+    if (id === "historico") {
+        carregarHistorico();
+    }
 
     window.scrollTo({
         top: 0,
@@ -401,687 +372,508 @@ function mostrarPagina(id) {
 
 
 /* =====================================================
-   PRODUTOS
+   ABRIR SETOR
 ===================================================== */
 
-function mostrarProdutos() {
+function abrirSetor(setor) {
 
-    const html =
-        produtos
-            .map(produto => {
-
-                return `
-
-                    <article class="produto">
-
-                        <img
-                            src="${escapar(produto.imagem)}"
-                            alt="${escapar(produto.nome)}"
-                            onerror="
-                                this.onerror=null;
-                                this.src='img/mercado-mm.jpg';
-                            "
-                        >
-
-                        <div class="produto-conteudo">
-
-                            <h3>
-                                ${escapar(produto.nome)}
-                            </h3>
-
-                            <div class="preco">
-                                ${dinheiro(produto.preco)}
-                            </div>
-
-                            ${
-                                produto.unidade
-                                    ?
-                                    `<div class="unidade">
-                                        por ${escapar(produto.unidade)}
-                                    </div>`
-                                    :
-                                    ""
-                            }
-
-                            <button
-                                class="comprar"
-                                onclick="comprarAgora(${produto.id})"
-                            >
-                                Comprar agora
-                            </button>
-
-                            <button
-                                class="adicionar"
-                                onclick="adicionarCarrinho(${produto.id})"
-                            >
-                                + Adicionar ao carrinho
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                `;
-
-            })
-            .join("");
-
+    setorAtual = setor;
 
     document
-        .getElementById("produtos")
-        .innerHTML = html;
-
+        .getElementById("listaSetores")
+        .style.display = "none";
 
     document
-        .getElementById("produtosInicio")
-        .innerHTML = html;
+        .getElementById("areaSetor")
+        .classList.add("ativo");
+
+    document
+        .getElementById("tituloSetor")
+        .textContent = setores[setor];
+
+    preencherProdutos(setor);
+
+    configurarQuantidade(setor);
+
+    configurarMarca(setor);
+
+    configurarCorte(setor);
+
+    limparCampos();
 
 }
 
 
 /* =====================================================
-   CARRINHO
+   PREENCHER PRODUTOS
 ===================================================== */
 
-function pegarCarrinho() {
+function preencherProdutos(setor) {
 
-    return carregar(
-        CHAVE_CARRINHO,
-        []
-    );
-
-}
-
-
-function salvarCarrinho(carrinho) {
-
-    salvar(
-        CHAVE_CARRINHO,
-        carrinho
-    );
-
-}
-
-
-function adicionarCarrinho(id) {
-
-    const produto =
-        produtos.find(
-            item => item.id === id
-        );
-
-
-    if (!produto) {
-
-        return;
-
-    }
-
-
-    const carrinho =
-        pegarCarrinho();
-
-
-    const existente =
-        carrinho.find(
-            item => item.id === id
-        );
-
-
-    if (existente) {
-
-        existente.quantidade++;
-
-    } else {
-
-        carrinho.push({
-
-            id: produto.id,
-
-            nome: produto.nome,
-
-            preco: produto.preco,
-
-            unidade: produto.unidade,
-
-            quantidade: 1
-
-        });
-
-    }
-
-
-    salvarCarrinho(carrinho);
-
-    atualizarCarrinho();
-
-
-    alert(
-        produto.nome +
-        " foi adicionado ao carrinho."
-    );
-
-}
-
-
-function comprarAgora(id) {
-
-    const produto =
-        produtos.find(
-            item => item.id === id
-        );
-
-
-    if (!produto) {
-
-        return;
-
-    }
-
-
-    /*
-       IMPORTANTE:
-
-       Comprar agora NÃO abre o carrinho.
-
-       Ele coloca somente aquele produto
-       no carrinho temporariamente e vai
-       direto para o checkout.
-    */
-
-    salvarCarrinho([
-
-        {
-
-            id: produto.id,
-
-            nome: produto.nome,
-
-            preco: produto.preco,
-
-            unidade: produto.unidade,
-
-            quantidade: 1
-
-        }
-
-    ]);
-
-
-    atualizarCarrinho();
-
-    abrirCheckout();
-
-}
-
-
-function totalCarrinho() {
-
-    return pegarCarrinho()
-        .reduce(
-            (total, item) =>
-                total +
-                (
-                    item.preco *
-                    item.quantidade
-                ),
-            0
-        );
-
-}
-
-
-function atualizarCarrinho() {
-
-    const carrinho =
-        pegarCarrinho();
-
-
-    const quantidade =
-        carrinho.reduce(
-            (total, item) =>
-                total + item.quantidade,
-            0
-        );
-
-
-    document
-        .getElementById("contadorCarrinho")
-        .textContent = quantidade;
-
-
-    const container =
+    const select =
         document.getElementById(
-            "carrinhoItens"
+            "produtoSelecionado"
         );
 
+    if (!select) return;
 
-    if (carrinho.length === 0) {
+    select.innerHTML =
+        `<option value="">Selecione o produto</option>`;
 
-        container.innerHTML = `
+    produtos[setor].forEach(produto => {
 
-            <div class="card">
+        const option =
+            document.createElement("option");
 
-                <h3>
-                    Seu carrinho está vazio.
-                </h3>
+        option.value = produto;
 
-                <p>
-                    Escolha uma oferta para começar.
-                </p>
+        option.textContent = produto;
 
-            </div>
-
-        `;
-
-    } else {
-
-        container.innerHTML =
-
-            carrinho
-                .map(item => {
-
-                    return `
-
-                        <div class="item-carrinho">
-
-                            <div>
-
-                                <strong>
-                                    ${escapar(item.nome)}
-                                </strong>
-
-                                <br>
-
-                                <small>
-                                    ${dinheiro(item.preco)}
-                                </small>
-
-                                <div class="quantidade">
-
-                                    <button
-                                        onclick="alterarQuantidade(
-                                            ${item.id},
-                                            -1
-                                        )"
-                                    >
-                                        −
-                                    </button>
-
-                                    <strong>
-                                        ${item.quantidade}
-                                    </strong>
-
-                                    <button
-                                        onclick="alterarQuantidade(
-                                            ${item.id},
-                                            1
-                                        )"
-                                    >
-                                        +
-                                    </button>
-
-                                </div>
-
-                                <button
-                                    class="remover"
-                                    onclick="removerCarrinho(
-                                        ${item.id}
-                                    )"
-                                >
-                                    Remover
-                                </button>
-
-                            </div>
-
-                            <strong>
-                                ${
-                                    dinheiro(
-                                        item.preco *
-                                        item.quantidade
-                                    )
-                                }
-                            </strong>
-
-                        </div>
-
-                    `;
-
-                })
-                .join("");
-
-    }
-
-
-    document
-        .getElementById("totalCarrinho")
-        .textContent =
-            dinheiro(totalCarrinho());
-
-}
-
-
-function alterarQuantidade(id, valor) {
-
-    const carrinho =
-        pegarCarrinho();
-
-
-    const item =
-        carrinho.find(
-            produto => produto.id === id
-        );
-
-
-    if (!item) {
-
-        return;
-
-    }
-
-
-    item.quantidade += valor;
-
-
-    if (item.quantidade <= 0) {
-
-        salvarCarrinho(
-
-            carrinho.filter(
-                produto =>
-                    produto.id !== id
-            )
-
-        );
-
-    } else {
-
-        salvarCarrinho(carrinho);
-
-    }
-
-
-    atualizarCarrinho();
-
-}
-
-
-function removerCarrinho(id) {
-
-    const carrinho =
-        pegarCarrinho()
-            .filter(
-                item =>
-                    item.id !== id
-            );
-
-
-    salvarCarrinho(carrinho);
-
-    atualizarCarrinho();
-
-}
-
-
-function abrirCarrinho() {
-
-    atualizarCarrinho();
-
-    abrirModal(
-        "modalCarrinho"
-    );
-
-}
-
-
-/* =====================================================
-   MODAIS
-===================================================== */
-
-function abrirModal(id) {
-
-    document
-        .getElementById(id)
-        .classList.remove("oculto");
-
-}
-
-
-function fecharModal(id) {
-
-    document
-        .getElementById(id)
-        .classList.add("oculto");
-
-}
-
-
-/* =====================================================
-   CHECKOUT
-===================================================== */
-
-function abrirCheckout() {
-
-    const carrinho =
-        pegarCarrinho();
-
-
-    if (carrinho.length === 0) {
-
-        alert(
-            "Seu carrinho está vazio."
-        );
-
-        return;
-
-    }
-
-
-    atualizarResumo();
-
-    fecharModal(
-        "modalCarrinho"
-    );
-
-    abrirModal(
-        "modalCheckout"
-    );
-
-
-    alterarEntrega();
-
-    alterarPagamento();
-
-}
-
-
-function atualizarResumo() {
-
-    const carrinho =
-        pegarCarrinho();
-
-
-    let html =
-        "<strong>Produtos:</strong><br><br>";
-
-
-    carrinho.forEach(item => {
-
-        html +=
-            item.quantidade +
-            "x " +
-            escapar(item.nome) +
-            " — " +
-            dinheiro(
-                item.preco *
-                item.quantidade
-            ) +
-            "<br>";
+        select.appendChild(option);
 
     });
 
+}
 
-    html +=
-        "<br><strong>Total: " +
-        dinheiro(totalCarrinho()) +
-        "</strong>";
 
+/* =====================================================
+   QUANTIDADE
+===================================================== */
+
+function configurarQuantidade(setor) {
+
+    const label =
+        document.getElementById(
+            "labelQuantidade"
+        );
+
+    const campo =
+        document.getElementById(
+            "quantidadeProduto"
+        );
+
+    if (!label || !campo) return;
+
+    if (setoresKg.includes(setor)) {
+
+        label.textContent =
+            "Quantidade (kg)";
+
+        campo.min = "0.1";
+
+        campo.step = "0.1";
+
+        campo.value = "1";
+
+    } else {
+
+        label.textContent =
+            "Quantidade";
+
+        campo.min = "1";
+
+        campo.step = "1";
+
+        campo.value = "1";
+
+    }
+
+}
+
+
+/* =====================================================
+   MARCA
+===================================================== */
+
+function configurarMarca(setor) {
+
+    const campo =
+        document.getElementById(
+            "campoMarca"
+        );
+
+    if (!campo) return;
+
+    if (setoresComMarca.includes(setor)) {
+
+        campo.style.display = "block";
+
+    } else {
+
+        campo.style.display = "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   CORTE
+===================================================== */
+
+function configurarCorte(setor) {
+
+    const campo =
+        document.getElementById(
+            "campoCorte"
+        );
+
+    if (!campo) return;
+
+    if (setor === "acougue") {
+
+        campo.style.display = "block";
+
+    } else {
+
+        campo.style.display = "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   LIMPAR CAMPOS
+===================================================== */
+
+function limparCampos() {
+
+    const produto =
+        document.getElementById(
+            "produtoSelecionado"
+        );
+
+    const quantidade =
+        document.getElementById(
+            "quantidadeProduto"
+        );
+
+    const marca =
+        document.getElementById(
+            "marcaProduto"
+        );
+
+    const corte =
+        document.getElementById(
+            "corteProduto"
+        );
+
+    const observacao =
+        document.getElementById(
+            "observacaoProduto"
+        );
+
+    if (produto) produto.value = "";
+
+    if (quantidade) quantidade.value = "1";
+
+    if (marca) marca.value = "";
+
+    if (corte) corte.value = "";
+
+    if (observacao) observacao.value = "";
+
+}
+
+
+/* =====================================================
+   VOLTAR PARA SETORES
+===================================================== */
+
+function voltarSetores() {
 
     document
-        .getElementById(
-            "resumoPedido"
-        )
-        .innerHTML = html;
+        .getElementById("listaSetores")
+        .style.display = "grid";
+
+    document
+        .getElementById("areaSetor")
+        .classList.remove("ativo");
 
 }
 
 
-function alterarEntrega() {
+/* =====================================================
+   ADICIONAR PRODUTO
+===================================================== */
 
-    const tipo =
+function adicionarProduto() {
+
+    const produto =
         document
             .getElementById(
-                "tipoEntrega"
+                "produtoSelecionado"
             )
             .value;
 
-
-    const area =
-        document
-            .getElementById(
-                "enderecoArea"
-            );
-
-
-    if (tipo === "entrega") {
-
-        area.classList.remove(
-            "oculto"
-        );
-
-    } else {
-
-        area.classList.add(
-            "oculto"
-        );
-
-    }
-
-}
-
-
-function alterarPagamento() {
-
-    const pagamento =
-        document
-            .getElementById(
-                "pagamento"
-            )
-            .value;
-
-
-    const area =
-        document
-            .getElementById(
-                "trocoArea"
-            );
-
-
-    if (pagamento === "dinheiro") {
-
-        area.classList.remove(
-            "oculto"
-        );
-
-    } else {
-
-        area.classList.add(
-            "oculto"
-        );
-
-        document
-            .getElementById(
-                "trocoPara"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "resultadoTroco"
-            )
-            .textContent = "";
-
-    }
-
-}
-
-
-function calcularTroco() {
-
-    const valor =
+    const quantidade =
         Number(
             document
                 .getElementById(
-                    "trocoPara"
+                    "quantidadeProduto"
                 )
                 .value
         );
 
-
-    const total =
-        totalCarrinho();
-
-
-    const resultado =
+    const marca =
         document
             .getElementById(
-                "resultadoTroco"
-            );
+                "marcaProduto"
+            )
+            .value
+            .trim();
 
+    const corte =
+        document
+            .getElementById(
+                "corteProduto"
+            )
+            .value
+            .trim();
 
-    if (!valor) {
+    const observacao =
+        document
+            .getElementById(
+                "observacaoProduto"
+            )
+            .value
+            .trim();
 
-        resultado.textContent = "";
+    if (!produto) {
 
-        return;
-
-    }
-
-
-    if (valor < total) {
-
-        resultado.textContent =
-            "O valor informado é menor que o total.";
-
-        resultado.style.color =
-            "#d62828";
-
-        return;
-
-    }
-
-
-    resultado.textContent =
-        "Troco: " +
-        dinheiro(
-            valor - total
+        alert(
+            "Selecione um produto."
         );
 
-    resultado.style.color =
-        "#19a857";
+        return;
+    }
+
+    if (!quantidade || quantidade <= 0) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+    }
+
+    carrinho.push({
+
+        id: Date.now(),
+
+        produto,
+
+        quantidade,
+
+        unidade:
+            setoresKg.includes(setorAtual)
+                ? "kg"
+                : "unidade",
+
+        setor:
+            setores[setorAtual],
+
+        marca,
+
+        corte,
+
+        observacao
+
+    });
+
+    salvarCarrinho();
+
+    atualizarContador();
+
+    alert(
+        "Produto adicionado ao carrinho!"
+    );
+
+    limparCampos();
 
 }
 
 
 /* =====================================================
-   FINALIZAR PEDIDO
+   SALVAR CARRINHO
 ===================================================== */
 
-function finalizarPedido() {
+function salvarCarrinho() {
 
-    const carrinho =
-        pegarCarrinho();
+    localStorage.setItem(
+        "mercadoMM_carrinho",
+        JSON.stringify(carrinho)
+    );
 
+}
+
+
+/* =====================================================
+   CONTADOR
+===================================================== */
+
+function atualizarContador() {
+
+    const contador =
+        document.getElementById(
+            "contadorCarrinho"
+        );
+
+    if (!contador) return;
+
+    contador.textContent =
+        carrinho.length;
+
+}
+
+
+/* =====================================================
+   ATUALIZAR CARRINHO
+===================================================== */
+
+function atualizarCarrinho() {
+
+    const lista =
+        document.getElementById(
+            "listaCarrinho"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnFinalizar"
+        );
+
+    if (!lista || !botao) return;
+
+    lista.innerHTML = "";
+
+    if (carrinho.length === 0) {
+
+        lista.innerHTML =
+            `<p class="vazio">
+                Seu carrinho está vazio.
+            </p>`;
+
+        botao.style.display = "none";
+
+        return;
+    }
+
+    botao.style.display = "block";
+
+    carrinho.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "item-carrinho";
+
+        const quantidade =
+            Number(item.quantidade);
+
+        const quantidadeTexto =
+            item.unidade === "kg"
+                ? `${quantidade} kg`
+                : `${quantidade} unidade(s)`;
+
+        let detalhes = "";
+
+        if (item.marca) {
+
+            detalhes +=
+                `<br><small>
+                    🏷️ Marca:
+                    ${escaparHTML(item.marca)}
+                </small>`;
+
+        }
+
+        if (item.corte) {
+
+            detalhes +=
+                `<br><small>
+                    🔪 Como deseja:
+                    ${escaparHTML(item.corte)}
+                </small>`;
+
+        }
+
+        if (item.observacao) {
+
+            detalhes +=
+                `<br><small>
+                    📝 Observação:
+                    ${escaparHTML(item.observacao)}
+                </small>`;
+
+        }
+
+        div.innerHTML = `
+
+            <div>
+
+                <strong>
+                    ${escaparHTML(item.produto)}
+                </strong>
+
+                <br>
+
+                <small>
+                    ${escaparHTML(item.setor)}
+                </small>
+
+                <br>
+
+                Quantidade:
+                ${quantidadeTexto}
+
+                ${detalhes}
+
+            </div>
+
+            <button
+                onclick="removerProduto(${item.id})">
+
+                🗑️
+
+            </button>
+
+        `;
+
+        lista.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   REMOVER PRODUTO
+===================================================== */
+
+function removerProduto(id) {
+
+    carrinho =
+        carrinho.filter(
+            item => item.id !== id
+        );
+
+    salvarCarrinho();
+
+    atualizarCarrinho();
+
+    atualizarContador();
+
+}
+
+
+/* =====================================================
+   FINALIZAR CARRINHO
+===================================================== */
+
+function finalizarCarrinho() {
 
     if (carrinho.length === 0) {
 
@@ -1090,956 +882,634 @@ function finalizarPedido() {
         );
 
         return;
+    }
+
+    abrirSecao("finalizar");
+
+}
+
+
+/* =====================================================
+   TIPO DE RECEBIMENTO
+===================================================== */
+
+function alterarTipoRecebimento() {
+
+    const selecionado =
+        document.querySelector(
+            'input[name="tipoRecebimento"]:checked'
+        );
+
+    if (!selecionado) return;
+
+    const tipo =
+        selecionado.value;
+
+    const dadosEntrega =
+        document.getElementById(
+            "dadosEntrega"
+        );
+
+    const rua =
+        document.getElementById(
+            "ruaCliente"
+        );
+
+    const numero =
+        document.getElementById(
+            "numeroCliente"
+        );
+
+    const bairro =
+        document.getElementById(
+            "bairroCliente"
+        );
+
+    if (
+        !dadosEntrega ||
+        !rua ||
+        !numero ||
+        !bairro
+    ) {
+        return;
+    }
+
+    if (tipo === "Entrega") {
+
+        dadosEntrega.style.display =
+            "block";
+
+        rua.required = true;
+
+        numero.required = true;
+
+        bairro.required = true;
+
+    } else {
+
+        dadosEntrega.style.display =
+            "none";
+
+        rua.required = false;
+
+        numero.required = false;
+
+        bairro.required = false;
+
+        rua.value = "";
+
+        numero.value = "";
+
+        bairro.value = "";
+
+        const referencia =
+            document.getElementById(
+                "referenciaCliente"
+            );
+
+        if (referencia) {
+            referencia.value = "";
+        }
 
     }
 
+}
 
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
+
+/* =====================================================
+   ENVIAR PEDIDO PELO WHATSAPP
+===================================================== */
+
+function enviarPedido(event) {
+
+    event.preventDefault();
+
+    if (carrinho.length === 0) {
+
+        alert(
+            "Seu carrinho está vazio."
         );
 
+        return;
+    }
 
-    const tipo =
+    const nome =
         document
             .getElementById(
-                "tipoEntrega"
+                "nomeCliente"
             )
-            .value;
+            .value
+            .trim();
 
+    const selecionado =
+        document.querySelector(
+            'input[name="tipoRecebimento"]:checked'
+        );
+
+    if (!selecionado) {
+
+        alert(
+            "Selecione a forma de recebimento."
+        );
+
+        return;
+    }
+
+    const tipo =
+        selecionado.value;
 
     const pagamento =
         document
             .getElementById(
-                "pagamento"
+                "formaPagamento"
             )
             .value;
 
+    const observacao =
+        document
+            .getElementById(
+                "observacaoCliente"
+            )
+            .value
+            .trim();
 
-    let endereco = null;
+    let mensagem =
+        "🛒 *NOVO PEDIDO - SUPERMERCADO MM*%0A%0A";
 
+    mensagem +=
+        "*CLIENTE*%0A";
 
-    /* ENTREGA */
+    mensagem +=
+        `Nome: ${encodeURIComponent(nome)}%0A`;
 
-    if (tipo === "entrega") {
+    mensagem +=
+        `Forma de recebimento: ${encodeURIComponent(tipo)}%0A`;
+
+    if (tipo === "Entrega") {
 
         const rua =
             document
-                .getElementById("rua")
+                .getElementById(
+                    "ruaCliente"
+                )
                 .value
                 .trim();
 
         const numero =
             document
-                .getElementById("numero")
+                .getElementById(
+                    "numeroCliente"
+                )
                 .value
                 .trim();
 
         const bairro =
             document
-                .getElementById("bairro")
+                .getElementById(
+                    "bairroCliente"
+                )
                 .value
                 .trim();
 
         const referencia =
             document
-                .getElementById("referencia")
+                .getElementById(
+                    "referenciaCliente"
+                )
                 .value
                 .trim();
 
+        mensagem +=
+            `Rua: ${encodeURIComponent(rua)}%0A`;
 
-        if (
-            !rua ||
-            !numero ||
-            !bairro
-        ) {
+        mensagem +=
+            `Número: ${encodeURIComponent(numero)}%0A`;
 
-            alert(
-                "Preencha Rua, Número e Bairro."
-            );
+        mensagem +=
+            `Bairro: ${encodeURIComponent(bairro)}%0A`;
 
-            return;
-
-        }
-
-
-        endereco = {
-
-            rua,
-
-            numero,
-
-            bairro,
-
-            referencia
-
-        };
-
-    }
-
-
-    /* DINHEIRO */
-
-    let trocoPara = null;
-
-    let troco = null;
-
-
-    if (
-        pagamento === "dinheiro"
-    ) {
-
-        trocoPara =
-            Number(
-                document
-                    .getElementById(
-                        "trocoPara"
-                    )
-                    .value
-            );
-
-
-        if (
-            !trocoPara ||
-            trocoPara < totalCarrinho()
-        ) {
-
-            alert(
-                "Informe um valor suficiente para o troco."
-            );
-
-            return;
-
-        }
-
-
-        troco =
-            trocoPara -
-            totalCarrinho();
-
-    }
-
-
-    /* PEDIDO */
-
-    const pedido = {
-
-        id: gerarId(),
-
-        data:
-            new Date().toISOString(),
-
-        cliente:
-            usuario
-                ? usuario.nome
-                : "Cliente",
-
-        itens:
-            carrinho.map(
-                item => ({
-                    ...item
-                })
-            ),
-
-        total:
-            totalCarrinho(),
-
-        tipoEntrega:
-            tipo,
-
-        endereco:
-            endereco,
-
-        pagamento:
-            pagamento,
-
-        trocoPara:
-            trocoPara,
-
-        troco:
-            troco
-
-    };
-
-
-    /* HISTÓRICO */
-
-    const historico =
-        carregar(
-            CHAVE_HISTORICO,
-            []
-        );
-
-
-    historico.unshift(
-        pedido
-    );
-
-
-    salvar(
-        CHAVE_HISTORICO,
-        historico
-    );
-
-
-    /* WHATSAPP */
-
-    const mensagem =
-        montarMensagem(
-            pedido
-        );
-
-
-    /*
-       Limpamos o carrinho depois
-       de montar o pedido.
-    */
-
-    salvarCarrinho([]);
-
-    atualizarCarrinho();
-
-
-    fecharModal(
-        "modalCheckout"
-    );
-
-
-    /*
-       Abre o WhatsApp.
-    */
-
-    const url =
-        "https://wa.me/" +
-        WHATSAPP +
-        "?text=" +
-        encodeURIComponent(
-            mensagem
-        );
-
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-
-    /*
-       Mostra a mensagem de
-       agradecimento no próprio site.
-    */
-
-    setTimeout(
-        () => {
-
-            abrirModal(
-                "modalSucesso"
-            );
-
-        },
-        500
-    );
-
-
-    mostrarHistorico();
-
-}
-
-
-/* =====================================================
-   MENSAGEM WHATSAPP
-===================================================== */
-
-function montarMensagem(pedido) {
-
-    let mensagem =
-        "*NOVO PEDIDO - MERCADO MM*\n\n";
-
-
-    mensagem +=
-        "*Cliente:* " +
-        pedido.cliente +
-        "\n\n";
-
-
-    mensagem +=
-        "*PRODUTOS:*\n";
-
-
-    pedido.itens.forEach(
-        item => {
+        if (referencia) {
 
             mensagem +=
-                "• " +
-                item.quantidade +
-                "x " +
-                item.nome +
-                " — " +
-                dinheiro(
-                    item.preco *
-                    item.quantidade
-                ) +
-                "\n";
-
-        }
-    );
-
-
-    mensagem +=
-        "\n*TOTAL:* " +
-        dinheiro(
-            pedido.total
-        ) +
-        "\n\n";
-
-
-    /* ENTREGA */
-
-    if (
-        pedido.tipoEntrega ===
-        "entrega"
-    ) {
-
-        mensagem +=
-            "*RECEBIMENTO:* Entrega\n\n";
-
-        mensagem +=
-            "*ENDEREÇO:*\n";
-
-        mensagem +=
-            "Rua: " +
-            pedido.endereco.rua +
-            "\n";
-
-        mensagem +=
-            "Número: " +
-            pedido.endereco.numero +
-            "\n";
-
-        mensagem +=
-            "Bairro: " +
-            pedido.endereco.bairro +
-            "\n";
-
-
-        if (
-            pedido.endereco.referencia
-        ) {
-
-            mensagem +=
-                "Referência: " +
-                pedido.endereco.referencia +
-                "\n";
+                `Referência: ${encodeURIComponent(referencia)}%0A`;
 
         }
 
-
-        mensagem += "\n";
-
-    } else {
-
-        mensagem +=
-            "*RECEBIMENTO:* Retirada no Mercado MM\n\n";
-
     }
 
-
-    /* PAGAMENTO */
-
-    const formas = {
-
-        pix: "Pix",
-
-        credito: "Crédito",
-
-        debito: "Débito",
-
-        dinheiro: "Dinheiro"
-
-    };
-
+    mensagem += "%0A";
 
     mensagem +=
-        "*PAGAMENTO:* " +
-        formas[pedido.pagamento] +
-        "\n";
-
-
-    if (
-        pedido.pagamento ===
-        "dinheiro"
-    ) {
-
-        mensagem +=
-            "Troco para: " +
-            dinheiro(
-                pedido.trocoPara
-            ) +
-            "\n";
-
-        mensagem +=
-            "Troco: " +
-            dinheiro(
-                pedido.troco
-            ) +
-            "\n";
-
-    }
-
+        `Pagamento: ${encodeURIComponent(pagamento)}%0A%0A`;
 
     mensagem +=
-        "\n*PEDIDO:* " +
-        pedido.id;
+        "*PRODUTOS DO PEDIDO*%0A";
 
+    carrinho.forEach(
+        (item, index) => {
 
-    mensagem +=
-        "\n\nObrigado por comprar no Mercado MM!";
+            const quantidade =
+                Number(item.quantidade);
 
-
-    return mensagem;
-
-}
-
-
-/* =====================================================
-   HISTÓRICO
-===================================================== */
-
-function mostrarHistorico() {
-
-    const historico =
-        carregar(
-            CHAVE_HISTORICO,
-            []
-        );
-
-
-    const container =
-        document.getElementById(
-            "historicoLista"
-        );
-
-
-    if (
-        historico.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="card centralizado">
-
-                <h3>
-                    Nenhum pedido ainda.
-                </h3>
-
-                <p>
-                    Seus pedidos aparecerão aqui.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-
-        historico
-            .map(pedido => {
-
-                const data =
-                    new Date(
-                        pedido.data
-                    ).toLocaleString(
-                        "pt-BR"
-                    );
-
-
-                return `
-
-                    <div class="historico-card">
-
-                        <h3>
-                            Pedido ${escapar(pedido.id)}
-                        </h3>
-
-                        <small>
-                            ${data}
-                        </small>
-
-                        <ul>
-
-                            ${
-                                pedido.itens
-                                    .map(item => `
-
-                                        <li>
-
-                                            ${item.quantidade}x
-                                            ${escapar(item.nome)}
-                                            —
-                                            ${dinheiro(
-                                                item.preco *
-                                                item.quantidade
-                                            )}
-
-                                        </li>
-
-                                    `)
-                                    .join("")
-                            }
-
-                        </ul>
-
-                        <strong>
-                            Total:
-                            ${dinheiro(pedido.total)}
-                        </strong>
-
-                        <p>
-
-                            ${
-                                pedido.tipoEntrega ===
-                                "entrega"
-                                    ?
-                                    "🚚 Entrega"
-                                    :
-                                    "🏪 Retirada"
-                            }
-
-                        </p>
-
-                    </div>
-
-                `;
-
-            })
-            .join("");
-
-}
-
-
-/* =====================================================
-   LISTA DE COMPRAS
-===================================================== */
-
-function pegarLista() {
-
-    return carregar(
-        CHAVE_LISTA,
-        []
-    );
-
-}
-
-
-function adicionarLista() {
-
-    const produto =
-        document
-            .getElementById(
-                "listaProduto"
-            )
-            .value
-            .trim();
-
-
-    const marca =
-        document
-            .getElementById(
-                "listaMarca"
-            )
-            .value
-            .trim();
-
-
-    const quantidade =
-        document
-            .getElementById(
-                "listaQuantidade"
-            )
-            .value
-            .trim();
-
-
-    const obs =
-        document
-            .getElementById(
-                "listaObs"
-            )
-            .value
-            .trim();
-
-
-    if (!produto) {
-
-        alert(
-            "Digite o produto."
-        );
-
-        return;
-
-    }
-
-
-    const lista =
-        pegarLista();
-
-
-    lista.push({
-
-        id: gerarId(),
-
-        produto,
-
-        marca,
-
-        quantidade:
-            quantidade || "1",
-
-        obs
-
-    });
-
-
-    salvar(
-        CHAVE_LISTA,
-        lista
-    );
-
-
-    document
-        .getElementById(
-            "listaProduto"
-        )
-        .value = "";
-
-    document
-        .getElementById(
-            "listaMarca"
-        )
-        .value = "";
-
-    document
-        .getElementById(
-            "listaQuantidade"
-        )
-        .value = "";
-
-    document
-        .getElementById(
-            "listaObs"
-        )
-        .value = "";
-
-
-    mostrarLista();
-
-}
-
-
-function mostrarLista() {
-
-    const lista =
-        pegarLista();
-
-
-    const container =
-        document.getElementById(
-            "listaItens"
-        );
-
-
-    if (
-        lista.length === 0
-    ) {
-
-        container.innerHTML =
-            "<p>Nenhum item na lista.</p>";
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-
-        lista
-            .map(item => `
-
-                <div class="lista-item">
-
-                    <div>
-
-                        <strong>
-                            ${item.quantidade}x
-                            ${escapar(item.produto)}
-                        </strong>
-
-                        ${
-                            item.marca
-                                ?
-                                `<br>Marca:
-                                ${escapar(item.marca)}`
-                                :
-                                ""
-                        }
-
-                        ${
-                            item.obs
-                                ?
-                                `<br>Obs.:
-                                ${escapar(item.obs)}`
-                                :
-                                ""
-                        }
-
-                    </div>
-
-                    <button
-                        onclick="removerLista('${item.id}')"
-                    >
-                        Remover
-                    </button>
-
-                </div>
-
-            `)
-            .join("");
-
-}
-
-
-function removerLista(id) {
-
-    const lista =
-        pegarLista()
-            .filter(
-                item =>
-                    String(item.id) !==
-                    String(id)
-            );
-
-
-    salvar(
-        CHAVE_LISTA,
-        lista
-    );
-
-
-    mostrarLista();
-
-}
-
-
-function limparLista() {
-
-    if (
-        !confirm(
-            "Deseja limpar sua lista?"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    salvar(
-        CHAVE_LISTA,
-        []
-    );
-
-
-    mostrarLista();
-
-}
-
-
-function enviarLista() {
-
-    const lista =
-        pegarLista();
-
-
-    if (
-        lista.length === 0
-    ) {
-
-        alert(
-            "Sua lista está vazia."
-        );
-
-        return;
-
-    }
-
-
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
-        );
-
-
-    let mensagem =
-        "*LISTA DE COMPRAS - MERCADO MM*\n\n";
-
-
-    if (usuario) {
-
-        mensagem +=
-            "*Cliente:* " +
-            usuario.nome +
-            "\n\n";
-
-    }
-
-
-    lista.forEach(
-        item => {
+            const quantidadeTexto =
+                item.unidade === "kg"
+                    ? `${quantidade} kg`
+                    : `${quantidade} unidade(s)`;
 
             mensagem +=
-                "• " +
-                item.quantidade +
-                "x " +
-                item.produto;
+                `${index + 1}. ${encodeURIComponent(item.produto)}%0A`;
 
+            mensagem +=
+                `Quantidade: ${encodeURIComponent(quantidadeTexto)}%0A`;
+
+            mensagem +=
+                `Setor: ${encodeURIComponent(item.setor)}%0A`;
 
             if (item.marca) {
 
                 mensagem +=
-                    " — " +
-                    item.marca;
+                    `Marca: ${encodeURIComponent(item.marca)}%0A`;
 
             }
 
-
-            if (item.obs) {
+            if (item.corte) {
 
                 mensagem +=
-                    " (" +
-                    item.obs +
-                    ")";
+                    `Como deseja: ${encodeURIComponent(item.corte)}%0A`;
 
             }
 
+            if (item.observacao) {
 
-            mensagem += "\n";
+                mensagem +=
+                    `Observação: ${encodeURIComponent(item.observacao)}%0A`;
+
+            }
+
+            mensagem += "%0A";
 
         }
     );
 
+    if (observacao) {
+
+        mensagem +=
+            "*OBSERVAÇÃO GERAL*%0A";
+
+        mensagem +=
+            `${encodeURIComponent(observacao)}%0A%0A`;
+
+    }
+
+    mensagem +=
+        "💰 *O valor da compra será informado por um funcionário do Supermercado MM pelo WhatsApp.*";
+
+    /* =================================================
+       SALVAR HISTÓRICO ANTES DE LIMPAR O CARRINHO
+    ================================================= */
+
+    salvarHistorico(
+        nome,
+        tipo
+    );
 
     const url =
-        "https://wa.me/" +
-        WHATSAPP +
-        "?text=" +
-        encodeURIComponent(
-            mensagem
-        );
-
+        `https://wa.me/${WHATSAPP}?text=${mensagem}`;
 
     window.open(
         url,
         "_blank"
     );
 
+    carrinho = [];
+
+    salvarCarrinho();
+
+    atualizarContador();
+
+    const form =
+        document.getElementById(
+            "formPedido"
+        );
+
+    if (form) {
+        form.reset();
+    }
+
+    alterarTipoRecebimento();
+
+    alert(
+        "Pedido enviado! Um funcionário do Supermercado MM responderá pelo WhatsApp com o valor da sua compra."
+    );
+
+    abrirSecao("inicio");
+
 }
 
 
 /* =====================================================
-   CONTA
+   SALVAR HISTÓRICO
 ===================================================== */
 
-function abrirConta() {
+function salvarHistorico(
+    nome,
+    tipo
+) {
 
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
-        );
+    let historico =
+        JSON.parse(
+            localStorage.getItem(
+                "mercadoMM_historico"
+            )
+        ) || [];
 
+    historico.unshift({
 
-    if (!usuario) {
+        nome: nome,
 
-        return;
+        tipo: tipo,
 
-    }
+        data:
+            new Date()
+                .toLocaleString(
+                    "pt-BR"
+                ),
 
+        produtos:
+            carrinho.map(
+                item => ({
 
-    document
-        .getElementById(
-            "nomeConta"
-        )
-        .value =
-            usuario.nome;
+                    produto:
+                        item.produto,
 
+                    quantidade:
+                        item.quantidade,
 
-    abrirModal(
-        "modalConta"
+                    unidade:
+                        item.unidade,
+
+                    setor:
+                        item.setor,
+
+                    marca:
+                        item.marca || "",
+
+                    corte:
+                        item.corte || "",
+
+                    observacao:
+                        item.observacao || ""
+
+                })
+            )
+
+    });
+
+    localStorage.setItem(
+
+        "mercadoMM_historico",
+
+        JSON.stringify(historico)
+
     );
 
 }
 
 
-function salvarNome() {
+/* =====================================================
+   MAPA
+===================================================== */
 
-    const usuario =
-        carregar(
-            CHAVE_USUARIO,
-            null
+function abrirMapa() {
+
+    const endereco =
+        encodeURIComponent(
+            "Rua Guanabara, 26, Divinolândia, SP"
         );
 
+    window.open(
 
-    if (!usuario) {
+        `https://www.google.com/maps/search/?api=1&query=${endereco}`,
 
-        return;
+        "_blank"
 
-    }
+    );
+
+}
 
 
-    const nome =
-        document
-            .getElementById(
-                "nomeConta"
+/* =====================================================
+   MOSTRAR HISTÓRICO
+===================================================== */
+
+function carregarHistorico() {
+
+    const lista =
+        document.getElementById(
+            "listaHistorico"
+        );
+
+    if (!lista) return;
+
+    const historico =
+        JSON.parse(
+            localStorage.getItem(
+                "mercadoMM_historico"
             )
-            .value
-            .trim();
+        ) || [];
 
+    if (historico.length === 0) {
 
-    if (nome.length < 2) {
-
-        alert(
-            "Digite um nome válido."
-        );
+        lista.innerHTML =
+            `<p class="vazio">
+                Nenhum pedido realizado ainda.
+            </p>`;
 
         return;
 
     }
 
+    lista.innerHTML = "";
 
-    usuario.nome = nome;
+    historico.forEach(
+        (pedido, index) => {
 
+            const div =
+                document.createElement(
+                    "div"
+                );
 
-    salvar(
-        CHAVE_USUARIO,
-        usuario
+            div.className =
+                "item-carrinho";
+
+            let produtosHTML = "";
+
+            if (
+                Array.isArray(
+                    pedido.produtos
+                )
+            ) {
+
+                pedido.produtos.forEach(
+                    item => {
+
+                        const quantidade =
+                            Number(
+                                item.quantidade
+                            );
+
+                        const quantidadeTexto =
+                            item.unidade === "kg"
+                                ? `${quantidade} kg`
+                                : `${quantidade} unidade(s)`;
+
+                        let detalhes = "";
+
+                        if (item.marca) {
+
+                            detalhes += `
+                                <br>
+                                <small>
+                                    🏷️ Marca:
+                                    ${escaparHTML(item.marca)}
+                                </small>
+                            `;
+
+                        }
+
+                        if (item.corte) {
+
+                            detalhes += `
+                                <br>
+                                <small>
+                                    🔪 Como deseja:
+                                    ${escaparHTML(item.corte)}
+                                </small>
+                            `;
+
+                        }
+
+                        if (item.observacao) {
+
+                            detalhes += `
+                                <br>
+                                <small>
+                                    📝 Observação:
+                                    ${escaparHTML(item.observacao)}
+                                </small>
+                            `;
+
+                        }
+
+                        produtosHTML += `
+
+                            <div
+                                style="
+                                    margin-top:10px;
+                                    padding:10px;
+                                    border-left:4px solid #168b38;
+                                    background:#f5fff7;
+                                "
+                            >
+
+                                <strong>
+                                    🛒
+                                    ${escaparHTML(item.produto)}
+                                </strong>
+
+                                <br>
+
+                                <small>
+                                    Quantidade:
+                                    ${quantidadeTexto}
+                                </small>
+
+                                ${detalhes}
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+            }
+
+            div.innerHTML = `
+
+                <div>
+
+                    <strong>
+                        📋 Pedido
+                        ${historico.length - index}
+                    </strong>
+
+                    <p>
+                        Cliente:
+                        ${escaparHTML(pedido.nome)}
+                    </p>
+
+                    <p>
+                        Recebimento:
+                        ${escaparHTML(pedido.tipo)}
+                    </p>
+
+                    <small>
+                        ${escaparHTML(pedido.data)}
+                    </small>
+
+                    <br><br>
+
+                    <strong>
+                        🛒 Produtos comprados:
+                    </strong>
+
+                    ${produtosHTML}
+
+                </div>
+
+            `;
+
+            lista.appendChild(div);
+
+        }
     );
 
-
-    fecharModal(
-        "modalConta"
-    );
+}
 
 
-    alert(
-        "Nome atualizado."
-    );
+/* =====================================================
+   SEGURANÇA HTML
+===================================================== */
+
+function escaparHTML(texto) {
+
+    return String(texto ?? "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
@@ -2052,65 +1522,11 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        mostrarProdutos();
+        atualizarContador();
 
-        atualizarCarrinho();
+        abrirSecao("inicio");
 
-        mostrarLista();
-
-        mostrarHistorico();
-
-
-        const usuario =
-            carregar(
-                CHAVE_USUARIO,
-                null
-            );
-
-
-        const logado =
-            localStorage.getItem(
-                CHAVE_LOGIN
-            ) === "true";
-
-
-        if (
-            usuario &&
-            logado
-        ) {
-
-            entrarNoSistema();
-
-        } else {
-
-            document
-                .getElementById(
-                    "sistema"
-                )
-                .classList.add(
-                    "oculto"
-                );
-
-            document
-                .getElementById(
-                    "telaLogin"
-                )
-                .classList.remove(
-                    "oculto"
-                );
-
-
-            if (usuario) {
-
-                mostrarLogin();
-
-            } else {
-
-                mostrarCadastro();
-
-            }
-
-        }
+        alterarTipoRecebimento();
 
     }
 );
