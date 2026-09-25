@@ -1,92 +1,170 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mercado MM</title>
+    <title>Supermercado MM</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<header class="topo">
 
-<section id="telaLogin" class="tela-login">
+    <div class="logo-area">
 
-    <div class="login-card">
+        <img
+            src="imagens/logo.png"
+            alt="Logo Supermercado MM"
+            class="logo"
+        >
 
-        <div class="logo">MM</div>
+        <div>
+            <h1>Supermercado MM</h1>
+            <p>Suas compras de um jeito simples</p>
+        </div>
 
-        <h1>Mercado MM</h1>
-        <p>Suas compras mais fáceis.</p>
+    </div>
 
-        <div id="loginArea">
+    <button
+        class="btn-menu"
+        onclick="alternarMenu()">
 
-            <h2>Entrar</h2>
+        ☰
 
-            <input
-                id="loginNome"
-                type="text"
-                placeholder="Seu nome"
-            >
+    </button>
 
-            <input
-                id="loginSenha"
-                type="password"
-                placeholder="Sua senha"
-            >
+</header>
 
-            <button onclick="entrar()">
-                Entrar
-            </button>
+
+<nav
+    id="menuPrincipal"
+    class="menu">
+
+    <button onclick="abrirSecao('inicio')">
+        🏠 Início
+    </button>
+
+    <button onclick="abrirSecao('compras')">
+        🛒 Fazer compras
+    </button>
+
+    <button
+        class="btn-carrinho"
+        onclick="abrirSecao('carrinho')">
+
+        🛒 Carrinho
+
+        <span id="contadorCarrinho">0</span>
+
+    </button>
+
+    <button onclick="abrirSecao('historico')">
+        📋 Histórico
+    </button>
+
+    <button onclick="abrirSecao('sobre')">
+        🏪 Sobre o mercado
+    </button>
+
+    <button onclick="abrirSecao('localizacao')">
+        📍 Como chegar
+    </button>
+
+</nav>
+
+
+<main>
+
+
+<!-- =====================================================
+     INÍCIO
+===================================================== -->
+
+<section
+    id="inicio"
+    class="secao ativa">
+
+    <div class="hero">
+
+        <div class="hero-conteudo">
+
+            <div class="hero-icone">
+                🛒
+            </div>
+
+            <h2>
+                Bem-vindo ao
+                <strong>Supermercado MM</strong>
+            </h2>
+
+            <p>
+                Faça suas compras de forma rápida,
+                simples e organizada.
+            </p>
 
             <button
-                class="botao-secundario"
-                onclick="mostrarCadastro()"
-            >
-                Criar conta
-            </button>
+                class="btn-principal"
+                onclick="abrirSecao('compras')">
 
-            <p id="erroLogin" class="erro"></p>
+                🛒 Começar minhas compras
+
+            </button>
 
         </div>
 
-        <div id="cadastroArea" class="oculto">
 
-            <h2>Criar conta</h2>
+        <div class="hero-imagem">
 
-            <input
-                id="cadastroNome"
-                type="text"
-                placeholder="Seu nome"
-            >
+            <img
+                src="imagens/mercado.jpg"
+                alt="Supermercado MM">
 
-            <input
-                id="cadastroSenha"
-                type="password"
-                placeholder="Crie uma senha"
-            >
+        </div>
 
-            <input
-                id="cadastroSenha2"
-                type="password"
-                placeholder="Confirme sua senha"
-            >
+    </div>
 
-            <button onclick="cadastrar()">
-                Criar conta
-            </button>
 
-            <button
-                class="botao-secundario"
-                onclick="mostrarLogin()"
-            >
-                Voltar
-            </button>
+    <div class="beneficios">
 
-            <p id="erroCadastro" class="erro"></p>
+        <div>
+
+            <strong>
+                🛒 Fácil de comprar
+            </strong>
+
+            <span>
+                Monte seu carrinho pelo site.
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                ⚡ Prático e rápido
+            </strong>
+
+            <span>
+                Escolha os produtos por setor.
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                📱 Atendimento pelo WhatsApp
+            </strong>
+
+            <span>
+                Envie seu pedido diretamente para o mercado.
+            </span>
 
         </div>
 
@@ -95,553 +173,694 @@
 </section>
 
 
-<!-- ================= SISTEMA ================= -->
-
-<div id="sistema" class="oculto">
-
-    <header>
-
-        <div class="marca">
-            <div class="logo pequeno">MM</div>
-
-            <div>
-                <strong>Mercado MM</strong>
-                <span>Qualidade para você</span>
-            </div>
-        </div>
-
-        <div class="acoes-header">
-
-            <button onclick="abrirCarrinho()">
-                🛒 Carrinho
-                <b id="contadorCarrinho">0</b>
-            </button>
-
-            <button onclick="abrirConta()">
-                👤 Conta
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- MENU -->
-
-    <nav>
-
-        <button onclick="mostrarPagina('inicio')">
-            Início
-        </button>
-
-        <button onclick="mostrarPagina('ofertas')">
-            Ofertas
-        </button>
-
-        <button onclick="mostrarPagina('lista')">
-            Lista de compras
-        </button>
-
-        <button onclick="mostrarPagina('historico')">
-            Histórico
-        </button>
-
-        <button onclick="mostrarPagina('contato')">
-            Contato
-        </button>
-
-        <button onclick="mostrarPagina('localizacao')">
-            Como chegar
-        </button>
-
-    </nav>
-
-
-    <main>
-
-        <!-- ================= INÍCIO ================= -->
-
-        <section id="inicio" class="pagina ativa">
-
-            <div class="hero">
-
-                <div>
-
-                    <span>MERCADO MM</span>
-
-                    <h1>
-                        Suas compras
-                        <strong>mais fáceis.</strong>
-                    </h1>
-
-                    <p>
-                        Confira nossas ofertas,
-                        escolha seus produtos e
-                        faça seu pedido pelo WhatsApp.
-                    </p>
-
-                    <button onclick="mostrarPagina('ofertas')">
-                        Ver ofertas
-                    </button>
-
-                </div>
-
-                <div class="hero-logo">
-                    MM
-                </div>
-
-            </div>
-
-            <h2 class="titulo">
-                Ofertas da semana
-            </h2>
-
-            <div
-                id="produtosInicio"
-                class="produtos"
-            ></div>
-
-        </section>
-
-
-        <!-- ================= OFERTAS ================= -->
-
-        <section id="ofertas" class="pagina">
-
-            <h2 class="titulo">
-                Ofertas
-            </h2>
-
-            <div
-                id="produtos"
-                class="produtos"
-            ></div>
-
-        </section>
-
-
-        <!-- ================= LISTA ================= -->
-
-        <section id="lista" class="pagina">
-
-            <h2 class="titulo">
-                Minha lista de compras
-            </h2>
-
-            <div class="card">
-
-                <input
-                    id="listaProduto"
-                    type="text"
-                    placeholder="Produto"
-                >
-
-                <input
-                    id="listaMarca"
-                    type="text"
-                    placeholder="Marca"
-                >
-
-                <input
-                    id="listaQuantidade"
-                    type="text"
-                    placeholder="Quantidade"
-                >
-
-                <input
-                    id="listaObs"
-                    type="text"
-                    placeholder="Observação"
-                >
-
-                <button onclick="adicionarLista()">
-                    + Adicionar
-                </button>
-
-                <div id="listaItens"></div>
-
-                <div class="botoes-lista">
-
-                    <button onclick="enviarLista()">
-                        📲 Enviar WhatsApp
-                    </button>
-
-                    <button
-                        class="botao-secundario"
-                        onclick="limparLista()"
-                    >
-                        Limpar lista
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= HISTÓRICO ================= -->
-
-        <section id="historico" class="pagina">
-
-            <h2 class="titulo">
-                Histórico de pedidos
-            </h2>
-
-            <div id="historicoLista"></div>
-
-        </section>
-
-
-        <!-- ================= CONTATO ================= -->
-
-        <section id="contato" class="pagina">
-
-            <div class="card centralizado">
-
-                <div class="icone">
-                    📲
-                </div>
-
-                <h2>Mercado MM</h2>
-
-                <p>
-                    WhatsApp:
-                    <strong>(19) 98112-3401</strong>
-                </p>
-
-                <a
-                    href="https://wa.me/5519981123401"
-                    target="_blank"
-                >
-                    Falar pelo WhatsApp
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= LOCALIZAÇÃO ================= -->
-
-        <section id="localizacao" class="pagina">
-
-            <div class="card centralizado">
-
-                <div class="icone">
-                    📍
-                </div>
-
-                <h2>Como chegar</h2>
-
-                <p>
-                    Rua Guanabara, nº 26
-                </p>
-
-                <p>
-                    Divinolândia - SP
-                </p>
-
-                <a
-                    href="https://www.google.com/maps/search/?api=1&query=Rua+Guanabara%2C+26%2C+Divinol%C3%A2ndia%2C+SP"
-                    target="_blank"
-                >
-                    Abrir Google Maps
-                </a>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <footer>
-
-        <div class="logo pequeno">
-            MM
-        </div>
-
-        <div>
-            <strong>Mercado MM</strong>
-
-            <p>
-                Sempre para te servir.
-            </p>
-        </div>
-
-    </footer>
-
-</div>
-
-
-<!-- ================= MODAL CARRINHO ================= -->
-
-<div
-    id="modalCarrinho"
-    class="modal oculto"
->
-
-    <div class="modal-card">
-
-        <div class="modal-topo">
-
-            <h2>🛒 Meu carrinho</h2>
-
-            <button onclick="fecharModal('modalCarrinho')">
-                ✕
-            </button>
-
-        </div>
-
-        <div id="carrinhoItens"></div>
-
-        <div class="total">
-
-            <span>Total</span>
-
-            <strong id="totalCarrinho">
-                R$ 0,00
-            </strong>
-
-        </div>
-
-        <button
-            class="botao-principal"
-            onclick="abrirCheckout()"
-        >
-            Finalizar pedido
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ================= MODAL CHECKOUT ================= -->
-
-<div
-    id="modalCheckout"
-    class="modal oculto"
->
-
-    <div class="modal-card">
-
-        <div class="modal-topo">
-
-            <h2>Finalizar pedido</h2>
-
-            <button onclick="fecharModal('modalCheckout')">
-                ✕
-            </button>
-
-        </div>
-
-        <div id="resumoPedido"></div>
-
-
-        <label>
-            Como deseja receber?
-        </label>
-
-        <select
-            id="tipoEntrega"
-            onchange="alterarEntrega()"
-        >
-
-            <option value="entrega">
-                🚚 Entrega
-            </option>
-
-            <option value="retirada">
-                🏪 Retirada
-            </option>
-
-        </select>
-
-
-        <div id="enderecoArea">
-
-            <h3>
-                Endereço de entrega
-            </h3>
-
-            <input
-                id="rua"
-                type="text"
-                placeholder="Rua"
-            >
-
-            <input
-                id="numero"
-                type="text"
-                placeholder="Número"
-            >
-
-            <input
-                id="bairro"
-                type="text"
-                placeholder="Bairro"
-            >
-
-            <input
-                id="referencia"
-                type="text"
-                placeholder="Referência"
-            >
-
-        </div>
-
-
-        <label>
-            Forma de pagamento
-        </label>
-
-        <select
-            id="pagamento"
-            onchange="alterarPagamento()"
-        >
-
-            <option value="pix">
-                Pix
-            </option>
-
-            <option value="credito">
-                Crédito
-            </option>
-
-            <option value="debito">
-                Débito
-            </option>
-
-            <option value="dinheiro">
-                Dinheiro
-            </option>
-
-        </select>
-
-
-        <div
-            id="trocoArea"
-            class="oculto"
-        >
-
-            <label>
-                Troco para quanto?
-            </label>
-
-            <input
-                id="trocoPara"
-                type="number"
-                step="0.01"
-                placeholder="Ex.: 100"
-                oninput="calcularTroco()"
-            >
-
-            <p id="resultadoTroco"></p>
-
-        </div>
-
-
-        <button
-            class="botao-whatsapp"
-            onclick="finalizarPedido()"
-        >
-            📲 Enviar pedido pelo WhatsApp
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ================= MODAL CONTA ================= -->
-
-<div
-    id="modalConta"
-    class="modal oculto"
->
-
-    <div class="modal-card">
-
-        <div class="modal-topo">
-
-            <h2>Minha conta</h2>
-
-            <button onclick="fecharModal('modalConta')">
-                ✕
-            </button>
-
-        </div>
-
-        <input
-            id="nomeConta"
-            type="text"
-        >
-
-        <button onclick="salvarNome()">
-            Salvar
-        </button>
-
-        <button
-            class="botao-secundario"
-            onclick="sair()"
-        >
-            Sair da conta
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ================= FINALIZAÇÃO ================= -->
-
-<div
-    id="modalSucesso"
-    class="modal oculto"
->
-
-    <div class="modal-card sucesso">
-
-        <div class="logo grande">
-            MM
-        </div>
+<!-- =====================================================
+     COMPRAS
+===================================================== -->
+
+<section
+    id="compras"
+    class="secao">
+
+    <div class="titulo-secao">
 
         <h2>
-            Compra enviada! 🛒
+            🛒 Fazer compras
         </h2>
 
         <p>
-            Muito obrigado pela sua compra no Mercado MM!
+            Escolha um setor para adicionar seus produtos.
         </p>
 
-        <p>
-            Assim que seu pedido for enviado,
-            um de nossos atendentes irá atendê-lo
-            com todo prazer pelo WhatsApp.
-        </p>
+    </div>
 
-        <p>
-            Nós ficamos muito felizes com a sua compra
-            e vamos preparar todos os produtos com muito
-            cuidado e qualidade para você.
-        </p>
 
-        <strong>
-            Mercado MM — sempre para te servir!
-        </strong>
+    <div
+        id="listaSetores"
+        class="grid-setores">
 
-        <button onclick="fecharModal('modalSucesso')">
-            Voltar ao mercado
+
+        <button onclick="abrirSetor('acougue')">
+
+            <span>🥩</span>
+
+            <strong>
+                Açougue
+            </strong>
+
+            <span>
+                Carnes e cortes
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('hortifruti')">
+
+            <span>🥬</span>
+
+            <strong>
+                Hortifruti
+            </strong>
+
+            <span>
+                Frutas e verduras
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('laticinios')">
+
+            <span>🥛</span>
+
+            <strong>
+                Laticínios
+            </strong>
+
+            <span>
+                Leites e derivados
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('bebidas')">
+
+            <span>🥤</span>
+
+            <strong>
+                Bebidas
+            </strong>
+
+            <span>
+                Bebidas variadas
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('biscoitos')">
+
+            <span>🍪</span>
+
+            <strong>
+                Biscoitos e Snacks
+            </strong>
+
+            <span>
+                Doces e salgados
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('limpeza')">
+
+            <span>🧹</span>
+
+            <strong>
+                Limpeza
+            </strong>
+
+            <span>
+                Produtos para casa
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('higiene')">
+
+            <span>🧴</span>
+
+            <strong>
+                Higiene e Perfumaria
+            </strong>
+
+            <span>
+                Cuidados pessoais
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('pet')">
+
+            <span>🐶</span>
+
+            <strong>
+                Pet Shop
+            </strong>
+
+            <span>
+                Produtos para animais
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('padaria')">
+
+            <span>🥖</span>
+
+            <strong>
+                Padaria
+            </strong>
+
+            <span>
+                Pães e produtos
+            </span>
+
+        </button>
+
+
+        <button onclick="abrirSetor('outros')">
+
+            <span>📦</span>
+
+            <strong>
+                Outros
+            </strong>
+
+            <span>
+                Diversos
+            </span>
+
         </button>
 
     </div>
 
+
+    <!-- ÁREA DO SETOR -->
+
+    <div
+        id="areaSetor"
+        class="area-setor">
+
+        <button
+            class="btn-voltar"
+            onclick="voltarSetores()">
+
+            ← Voltar para setores
+
+        </button>
+
+
+        <h3 id="tituloSetor"></h3>
+
+
+        <div class="form-produto">
+
+
+            <label for="produtoSelecionado">
+                Produto
+            </label>
+
+            <select id="produtoSelecionado">
+
+                <option value="">
+                    Selecione o produto
+                </option>
+
+            </select>
+
+
+            <label
+                id="labelQuantidade"
+                for="quantidadeProduto">
+
+                Quantidade
+
+            </label>
+
+            <input
+                type="number"
+                id="quantidadeProduto"
+                min="1"
+                step="1"
+                value="1"
+            >
+
+
+            <div
+                id="campoMarca"
+                style="display: none;">
+
+                <label for="marcaProduto">
+                    Marca
+                </label>
+
+                <input
+                    type="text"
+                    id="marcaProduto"
+                    placeholder="Digite a marca">
+
+            </div>
+
+
+            <div
+                id="campoCorte"
+                style="display: none;">
+
+                <label for="corteProduto">
+                    Como deseja?
+
+                </label>
+
+                <input
+                    type="text"
+                    id="corteProduto"
+                    placeholder="Ex.: bife, picado, moído..."
+                >
+
+            </div>
+
+
+            <label for="observacaoProduto">
+                Observação
+            </label>
+
+            <textarea
+                id="observacaoProduto"
+                placeholder="Alguma observação sobre o produto?"
+            ></textarea>
+
+
+            <button
+                class="btn-adicionar"
+                onclick="adicionarProduto()">
+
+                ➕ Adicionar ao carrinho
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CARRINHO
+===================================================== -->
+
+<section
+    id="carrinho"
+    class="secao">
+
+    <div class="titulo-secao">
+
+        <h2>
+            🛒 Meu carrinho
+        </h2>
+
+        <p>
+            Confira os produtos antes de finalizar.
+        </p>
+
+    </div>
+
+
+    <div
+        id="listaCarrinho"
+        class="lista-carrinho">
+
+        <p class="vazio">
+            Seu carrinho está vazio.
+        </p>
+
+    </div>
+
+
+    <button
+        id="btnFinalizar"
+        class="btn-finalizar"
+        onclick="finalizarCarrinho()"
+        style="display: none;">
+
+        Finalizar compra
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     FINALIZAR
+===================================================== -->
+
+<section
+    id="finalizar"
+    class="secao">
+
+    <div class="titulo-secao">
+
+        <h2>
+            ✅ Finalizar compra
+        </h2>
+
+        <p>
+            Preencha seus dados para enviar o pedido.
+        </p>
+
+    </div>
+
+
+    <form
+        id="formPedido"
+        class="form-finalizar"
+        onsubmit="enviarPedido(event)">
+
+
+        <label for="nomeCliente">
+            Nome completo
+        </label>
+
+        <input
+            type="text"
+            id="nomeCliente"
+            required
+            placeholder="Digite seu nome"
+        >
+
+
+        <h3>
+            Forma de recebimento
+        </h3>
+
+
+        <div class="opcoes-entrega">
+
+            <label class="opcao">
+
+                <input
+                    type="radio"
+                    name="tipoRecebimento"
+                    value="Entrega"
+                    checked
+                    onchange="alterarTipoRecebimento()"
+                >
+
+                🚚 Entrega
+
+            </label>
+
+
+            <label class="opcao">
+
+                <input
+                    type="radio"
+                    name="tipoRecebimento"
+                    value="Retirada"
+                    onchange="alterarTipoRecebimento()"
+                >
+
+                🏪 Retirada no mercado
+
+            </label>
+
+        </div>
+
+
+        <div
+            id="dadosEntrega">
+
+            <label for="ruaCliente">
+                Rua
+            </label>
+
+            <input
+                type="text"
+                id="ruaCliente"
+                placeholder="Nome da rua"
+            >
+
+
+            <label for="numeroCliente">
+                Número
+            </label>
+
+            <input
+                type="text"
+                id="numeroCliente"
+                placeholder="Número"
+            >
+
+
+            <label for="bairroCliente">
+                Bairro
+            </label>
+
+            <input
+                type="text"
+                id="bairroCliente"
+                placeholder="Bairro"
+            >
+
+
+            <label for="referenciaCliente">
+                Referência
+            </label>
+
+            <input
+                type="text"
+                id="referenciaCliente"
+                placeholder="Ex.: próximo à praça"
+            >
+
+        </div>
+
+
+        <h3>
+            Forma de pagamento
+        </h3>
+
+
+        <select
+            id="formaPagamento"
+            required>
+
+            <option value="">
+                Selecione
+            </option>
+
+            <option value="Dinheiro">
+                💵 Dinheiro
+            </option>
+
+            <option value="Débito">
+                💳 Débito
+            </option>
+
+            <option value="Crédito">
+                💳 Crédito
+            </option>
+
+            <option value="Pix">
+                📱 Pix
+            </option>
+
+        </select>
+
+
+        <label for="observacaoCliente">
+            Observação
+        </label>
+
+        <textarea
+            id="observacaoCliente"
+            placeholder="Alguma observação sobre seu pedido?"
+        ></textarea>
+
+
+        <div class="aviso-valor">
+
+           <div class="aviso-valor">
+    <strong>💚 Obrigado pela preferência!</strong>
+
+    <p>
+        Muito obrigado por fazer suas compras no Supermercado MM.
+    </p>
+
+    <p>
+        Seu pedido foi enviado e nossa equipe entrará em contato
+        pelo WhatsApp para confirmar a compra.
+    </p>
+
+    <strong>🛒 Volte sempre ao Supermercado MM!</strong>
 </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn-whatsapp">
+
+            📲 Enviar pedido pelo WhatsApp
+
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- =====================================================
+     HISTÓRICO
+===================================================== -->
+
+<section
+    id="historico"
+    class="secao">
+
+    <div class="titulo-secao">
+
+        <h2>
+            📋 Histórico de pedidos
+        </h2>
+
+        <p>
+            Seus pedidos realizados neste dispositivo.
+        </p>
+
+    </div>
+
+
+    <div
+        id="listaHistorico"
+        class="lista-historico">
+
+        <p class="vazio">
+            Nenhum pedido realizado ainda.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SOBRE
+===================================================== -->
+
+<section
+    id="sobre"
+    class="secao">
+
+    <div class="cartao-info">
+
+        <div class="icone-info">
+            🏪
+        </div>
+
+        <h2>
+            Sobre o Supermercado MM
+        </h2>
+
+        <p>
+            O Supermercado MM trabalha para oferecer
+            praticidade e facilidade para suas compras.
+        </p>
+
+        <p>
+            Faça seu pedido pelo nosso sistema e aguarde
+            um funcionário entrar em contato pelo WhatsApp
+            para informar o valor da sua compra.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     LOCALIZAÇÃO
+===================================================== -->
+
+<section
+    id="localizacao"
+    class="secao">
+
+    <div class="cartao-info">
+
+        <div class="icone-info">
+            📍
+        </div>
+
+        <h2>
+            Como chegar
+        </h2>
+
+        <p>
+            <strong>
+                Supermercado MM
+            </strong>
+        </p>
+
+        <p>
+            Rua Guanabara, nº 26
+        </p>
+
+        <p>
+            Divinolândia - SP
+        </p>
+
+        <p>
+            📞 (19) 98112-3401
+        </p>
+
+        <button
+            class="btn-principal"
+            id="btnAbrirMapa"
+            onclick="abrirMapa()">
+
+            📍 Abrir no mapa
+
+        </button>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================================
+     RODAPÉ
+===================================================== -->
+
+<footer>
+
+    <img
+        src="imagens/logo.png"
+        alt="Logo Supermercado MM"
+        class="logo-footer"
+    >
+
+    <strong>
+        Supermercado MM
+    </strong>
+
+    <p>
+        Suas compras de um jeito simples
+    </p>
+
+    <p>
+        Rua Guanabara, nº 26 — Divinolândia - SP
+    </p>
+
+    <p>
+        WhatsApp: (19) 98112-3401
+    </p>
+
+</footer>
 
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
