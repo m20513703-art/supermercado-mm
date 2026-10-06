@@ -715,15 +715,18 @@ function salvarCarrinho() {
 
 function atualizarContador() {
 
-    const contador =
-        document.getElementById(
-            "contadorCarrinho"
-        );
+    document
+        .querySelectorAll("#contadorCarrinho")
+        .forEach(contador => {
+            contador.textContent = carrinho.length;
+        });
 
-    if (!contador) return;
-
-    contador.textContent =
-        carrinho.length;
+    const rotulo = document.getElementById("rotuloCarrinhoFixo");
+    if (rotulo) {
+        rotulo.textContent = carrinho.length === 1
+            ? "1 item"
+            : `${carrinho.length} itens`;
+    }
 
 }
 
@@ -1530,3 +1533,42 @@ document.addEventListener(
 
     }
 );
+
+/* =====================================================
+   BUSCA RÁPIDA POR SETOR OU PRODUTO
+===================================================== */
+function normalizarBusca(valor) {
+    return String(valor || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("pt-BR")
+        .trim();
+}
+
+function buscarSetorOuProduto() {
+    const campo = document.getElementById("buscaSetor");
+    const termo = campo ? campo.value : "";
+    abrirSecao("compras");
+    filtrarSetores(termo);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function filtrarSetores(termo) {
+    const busca = normalizarBusca(termo);
+    const botoes = document.querySelectorAll("#listaSetores > button");
+    let encontrados = 0;
+
+    botoes.forEach(botao => {
+        const onclick = botao.getAttribute("onclick") || "";
+        const match = onclick.match(/abrirSetor\(['"]([^'"]+)['"]\)/);
+        const chave = match ? match[1] : "";
+        const nomesProdutos = produtos[chave] || [];
+        const conteudo = `${botao.textContent} ${nomesProdutos.join(" ")}`;
+        const mostrar = !busca || normalizarBusca(conteudo).includes(busca);
+        botao.hidden = !mostrar;
+        if (mostrar) encontrados++;
+    });
+
+    const aviso = document.getElementById("semResultados");
+    if (aviso) aviso.hidden = encontrados > 0;
+}

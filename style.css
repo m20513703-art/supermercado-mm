@@ -875,3 +875,177 @@ footer p {
     }
 
 }
+
+/* =====================================================
+   NOVA IDENTIDADE VISUAL MM — laranja, preto e branco
+===================================================== */
+:root {
+    --mm-laranja: #f97316;
+    --mm-laranja-escuro: #d95f0b;
+    --mm-preto: #151515;
+    --mm-fundo: #f7f7f5;
+    --mm-cinza: #666a70;
+    --mm-borda: #e8e5e0;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--mm-fundo); color: var(--mm-preto); }
+.topo {
+    min-height: 88px;
+    background: var(--mm-preto);
+    border-bottom: 4px solid var(--mm-laranja);
+    padding: 10px 5%;
+}
+.logo-area h1 { color: #fff; }
+.logo-area p { color: #c5c5c5; }
+.logo { border-radius: 50%; }
+.menu { background: #202020; border-bottom: 3px solid var(--mm-laranja); }
+.menu button { background: #202020; border-color: #3a3a3a; }
+.menu button:hover { background: #303030; border-color: var(--mm-laranja); }
+.btn-carrinho { border-color: var(--mm-laranja) !important; }
+#contadorCarrinho { background: var(--mm-laranja); color: #151515; font-weight: 800; }
+.btn-menu { background: var(--mm-laranja); color: #151515; font-weight: 800; }
+.secao { background: var(--mm-fundo); }
+
+.hero {
+    max-width: 1200px;
+    min-height: 510px;
+    grid-template-columns: 1.05fr .95fr;
+    border: 0;
+    border-radius: 28px;
+    background: var(--mm-laranja);
+    box-shadow: 0 16px 42px rgba(21,21,21,.12);
+}
+.hero-conteudo { padding: 52px; }
+.hero-icone { display: none; }
+.hero-tag {
+    display: inline-block;
+    padding: 11px 16px;
+    margin-bottom: 16px;
+    border-radius: 999px;
+    background: var(--mm-preto);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+.hero h2 { color: #fff; font-size: clamp(38px, 4vw, 54px); line-height: 1.08; margin: 10px 0 18px; }
+.hero h2 strong { display: block; color: var(--mm-preto); }
+.hero p { color: #fff; font-size: 17px; line-height: 1.6; max-width: 480px; }
+.hero-imagem { min-height: 510px; overflow: hidden; background: #ffe0c4; }
+.hero-imagem img { object-fit: cover; }
+.btn-principal { background: var(--mm-preto); color: #fff; border-radius: 14px; }
+.btn-principal:hover { background: #303030; }
+
+.busca-rapida {
+    max-width: 1200px;
+    margin: 22px auto 28px;
+    padding: 20px 22px;
+    border: 1px solid var(--mm-borda);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(21,21,21,.06);
+}
+.busca-rapida label { display: block; margin-bottom: 10px; font-weight: 800; color: var(--mm-preto); }
+.busca-rapida-controles { display: flex; gap: 10px; }
+.busca-rapida input {
+    min-width: 0; flex: 1; padding: 15px 16px; border: 2px solid var(--mm-borda);
+    border-radius: 13px; font-size: 16px; background: #fafaf9; color: var(--mm-preto);
+}
+.busca-rapida input:focus { outline: 3px solid rgba(249,115,22,.2); border-color: var(--mm-laranja); }
+.busca-rapida button { border: 0; border-radius: 13px; padding: 0 24px; background: var(--mm-preto); color: #fff; font-weight: 800; cursor: pointer; }
+.busca-rapida button:hover { background: var(--mm-laranja); color: var(--mm-preto); }
+.busca-rapida p { margin-top: 9px; color: var(--mm-cinza); font-size: 13px; }
+
+.beneficios { gap: 14px; }
+.beneficios div {
+    border: 1px solid var(--mm-borda); border-top: 4px solid var(--mm-laranja);
+    border-radius: 18px; box-shadow: 0 8px 22px rgba(21,21,21,.05); color: var(--mm-laranja-escuro);
+}
+.beneficios strong { color: var(--mm-preto); }
+.beneficios span { color: var(--mm-cinza); line-height: 1.5; }
+.titulo-secao h2 { color: var(--mm-preto); }
+.titulo-secao p { color: var(--mm-cinza); }
+.grid-setores button {
+    min-height: 150px; align-items: flex-start; text-align: left;
+    border: 1px solid var(--mm-borda); border-bottom: 4px solid var(--mm-laranja);
+    border-radius: 20px; box-shadow: 0 8px 22px rgba(21,21,21,.05);
+}
+.grid-setores button:hover { border-color: var(--mm-laranja); background: #fff8f2; transform: translateY(-3px); }
+.grid-setores button > span:first-child { font-size: 28px; }
+.grid-setores strong { color: var(--mm-preto); }
+.grid-setores span { color: var(--mm-cinza); }
+#listaSetores button[hidden], #semResultados[hidden] { display: none !important; }
+.sem-resultados {
+    grid-column: 1 / -1; padding: 24px; border: 1px dashed var(--mm-laranja);
+    border-radius: 16px; background: #fff; color: var(--mm-cinza); text-align: center;
+}
+.area-setor h3 { color: var(--mm-preto); }
+.btn-voltar { background: #fff; color: var(--mm-preto); border: 1px solid var(--mm-borda); }
+.btn-voltar:hover { background: #fff4e9; border-color: var(--mm-laranja); }
+.form-produto, .form-finalizar, .cartao-info {
+    border: 1px solid var(--mm-borda); border-top: 4px solid var(--mm-laranja);
+    border-radius: 20px; box-shadow: 0 12px 30px rgba(21,21,21,.06);
+}
+.form-produto input:focus, .form-produto select:focus, .form-produto textarea:focus,
+.form-finalizar input:focus, .form-finalizar select:focus, .form-finalizar textarea:focus { border-color: var(--mm-laranja); }
+.btn-adicionar, .btn-finalizar, .btn-whatsapp { background: var(--mm-laranja); color: var(--mm-preto); border-radius: 13px; }
+.btn-adicionar:hover, .btn-finalizar:hover, .btn-whatsapp:hover { background: var(--mm-preto); color: #fff; }
+.item-carrinho { border: 1px solid var(--mm-borda); border-left: 4px solid var(--mm-laranja); border-radius: 16px; }
+.item-carrinho button { background: var(--mm-preto); }
+.form-finalizar h3 { color: var(--mm-laranja-escuro); }
+.opcao:hover { border-color: var(--mm-laranja); }
+.aviso-valor { background: #fff2e6; border: 1px solid #ffc89f; color: #33251c; border-radius: 16px; }
+footer { border-top: 4px solid var(--mm-laranja); }
+.barra-sacola-fixa { display: none; }
+
+@media (max-width: 900px) {
+    .topo { min-height: 82px; padding: 8px 16px; }
+    .menu { top: 82px; }
+    .hero { grid-template-columns: 1fr; min-height: auto; border-radius: 24px; }
+    .hero-conteudo { order: 0; padding: 30px 26px; }
+    .hero-imagem { order: 1; height: 280px; min-height: 280px; }
+    .hero h2 { font-size: 42px; }
+    .busca-rapida { margin: 18px auto 22px; padding: 18px; }
+    .beneficios { grid-template-columns: 1fr; }
+    .grid-setores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .barra-sacola-fixa {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 1001;
+        display: flex; justify-content: space-between; align-items: center; gap: 14px;
+        padding: 12px max(16px, 4vw) calc(12px + env(safe-area-inset-bottom));
+        background: #fff; border-top: 1px solid var(--mm-borda); box-shadow: 0 -8px 24px rgba(21,21,21,.1);
+    }
+    .barra-sacola-info { display: flex; flex-direction: column; gap: 3px; color: var(--mm-preto); }
+    .barra-sacola-info strong { font-size: 15px; }
+    .barra-sacola-info span { color: var(--mm-cinza); font-size: 13px; }
+    .barra-sacola-fixa button {
+        display: flex; align-items: center; gap: 16px; border: 0; border-radius: 15px;
+        padding: 15px 18px; background: var(--mm-laranja); color: var(--mm-preto); font-weight: 800; font-size: 15px; cursor: pointer;
+    }
+    body { padding-bottom: 88px; }
+    .voltar-projetos { bottom: 100px !important; right: 12px !important; }
+}
+
+@media (max-width: 600px) {
+    .topo { min-height: 75px; }
+    .menu { top: 75px; }
+    .logo-area { gap: 10px; }
+    .logo-area h1 { font-size: 17px; }
+    .logo-area p { font-size: 10px; }
+    .hero { border-radius: 18px; }
+    .hero-conteudo { padding: 25px 20px; }
+    .hero h2 { font-size: 36px; }
+    .hero p { font-size: 16px; }
+    .hero-imagem { height: 235px; min-height: 235px; }
+    .hero-tag { font-size: 10px; padding: 9px 12px; }
+    .busca-rapida { padding: 15px; border-radius: 16px; }
+    .busca-rapida-controles { gap: 7px; }
+    .busca-rapida input { padding: 13px 11px; font-size: 14px; }
+    .busca-rapida button { padding: 0 15px; font-size: 14px; }
+    .grid-setores { gap: 10px; }
+    .grid-setores button { min-height: 132px; padding: 14px; border-radius: 16px; }
+    .grid-setores strong { font-size: 15px; }
+    .grid-setores span { font-size: 11px; }
+    .opcoes-entrega { grid-template-columns: 1fr; }
+    .barra-sacola-fixa button { padding: 14px 15px; font-size: 14px; }
+}

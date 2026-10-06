@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Supermercado MM</title>
+    <title>Supermercado MM | Sua compra mais simples</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -92,25 +92,23 @@
 
         <div class="hero-conteudo">
 
-            <div class="hero-icone">
-                🛒
-            </div>
+            <div class="hero-tag">MERCADO NA PALMA DA MÃO</div>
 
             <h2>
-                Bem-vindo ao
-                <strong>Supermercado MM</strong>
+                Seu mercado
+                <strong>mais perto.</strong>
             </h2>
 
             <p>
-                Faça suas compras de forma rápida,
-                simples e organizada.
+                Escolha seus produtos por setor, monte sua sacola
+                e envie o pedido pelo WhatsApp.
             </p>
 
             <button
                 class="btn-principal"
                 onclick="abrirSecao('compras')">
 
-                🛒 Começar minhas compras
+                🛒 Ver setores
 
             </button>
 
@@ -127,6 +125,19 @@
 
     </div>
 
+    <div class="busca-rapida" role="search">
+        <label for="buscaSetor">Buscar setor ou produto</label>
+        <div class="busca-rapida-controles">
+            <input
+                id="buscaSetor"
+                type="search"
+                placeholder="Ex.: tomate, pão, limpeza"
+                aria-label="Buscar um setor ou produto"
+                onkeydown="if(event.key === 'Enter'){event.preventDefault();buscarSetorOuProduto();}">
+            <button type="button" onclick="buscarSetorOuProduto()">Buscar</button>
+        </div>
+        <p>Encontre o setor que tem o produto que você procura.</p>
+    </div>
 
     <div class="beneficios">
 
@@ -163,7 +174,7 @@
             </strong>
 
             <span>
-                Envie seu pedido diretamente para o mercado.
+                Revise a mensagem e toque em Enviar no WhatsApp.
             </span>
 
         </div>
@@ -188,7 +199,7 @@
         </h2>
 
         <p>
-            Escolha um setor para adicionar seus produtos.
+            Busque por setor ou produto, ou escolha uma categoria.
         </p>
 
     </div>
@@ -198,6 +209,9 @@
         id="listaSetores"
         class="grid-setores">
 
+        <p id="semResultados" class="sem-resultados" hidden>
+            Não encontrei esse setor ou produto. Tente outra busca.
+        </p>
 
         <button onclick="abrirSetor('acougue')">
 
@@ -675,22 +689,13 @@
 
 
         <div class="aviso-valor">
-
-           <div class="aviso-valor">
-    <strong>📱 Quase lá!</strong>
-
-    <p>
-        Confira os dados do pedido antes de enviar.
-    </p>
-
-    <p>
-        Ao tocar no botão abaixo, o WhatsApp será aberto com a mensagem
-        preenchida. Revise e envie a mensagem para que a equipe receba o pedido.
-    </p>
-
-    <strong>🛒 Nossa equipe confirmará o pedido pelo WhatsApp.</strong>
-</div>
-
+            <strong>📱 Quase lá!</strong>
+            <p>Confira os dados do pedido antes de enviar.</p>
+            <p>
+                Ao tocar no botão abaixo, o WhatsApp será aberto com a mensagem
+                preenchida. Revise e envie a mensagem para que a equipe receba o pedido.
+            </p>
+            <strong>🛒 Nossa equipe confirmará o pedido pelo WhatsApp.</strong>
         </div>
 
 
@@ -828,6 +833,16 @@
 </main>
 
 
+<div class="barra-sacola-fixa" role="region" aria-label="Sua sacola de compras">
+    <div class="barra-sacola-info">
+        <strong>Minha sacola</strong>
+        <span id="rotuloCarrinhoFixo" aria-live="polite">0 itens</span>
+    </div>
+    <button type="button" onclick="abrirSecao('carrinho')">
+        Abrir sacola <span aria-hidden="true">→</span>
+    </button>
+</div>
+
 <!-- =====================================================
      RODAPÉ
 ===================================================== -->
@@ -861,7 +876,7 @@
 
 <script src="script.js"></script>
 
-  <a href="https://m20513703-art.github.io/mm-sistemas-e-tecnologia/projetos.html" aria-label="Voltar aos projetos da MM" style="position:fixed;right:18px;bottom:18px;z-index:9999;display:inline-block;padding:12px 16px;background:#111;color:#fff;border:2px solid #f97316;border-radius:10px;font:600 14px/1.2 system-ui,sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.28);">← Voltar aos projetos da MM</a>
+  <a class="voltar-projetos" href="https://m20513703-art.github.io/mm-sistemas-e-tecnologia/projetos.html" aria-label="Voltar aos projetos da MM" style="position:fixed;right:18px;bottom:18px;z-index:9999;display:inline-block;padding:12px 16px;background:#111;color:#fff;border:2px solid #f97316;border-radius:10px;font:600 14px/1.2 system-ui,sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.28);">← Voltar aos projetos da MM</a>
 </body>
 
 </html>
